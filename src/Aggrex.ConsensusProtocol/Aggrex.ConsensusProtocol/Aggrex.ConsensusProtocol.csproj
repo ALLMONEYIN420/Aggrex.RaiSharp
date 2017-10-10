@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Operations\**" />
+    <EmbeddedResource Remove="Operations\**" />
+    <None Remove="Operations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Aggrex.Common\Aggrex.Common.csproj" />
+    <ProjectReference Include="..\..\Aggrex.Network\Aggrex.Network.csproj" />
+  </ItemGroup>
+
+</Project>

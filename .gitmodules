@@ -1,0 +1,30 @@
+[submodule "src/Aggrex.VirtualMachine.Tests"]
+	path = src/Aggrex.VirtualMachine.Tests
+	url = https://github.com/Aggrex/Aggrex.VirtualMachine.Tests.git
+[submodule "src/Aggrex.VirtualMachine"]
+	path = src/Aggrex.VirtualMachine
+	url = https://github.com/Aggrex/Aggrex.VirtualMachine.git
+[submodule "src/Aggrex.ServiceRegistration"]
+	path = src/Aggrex.ServiceRegistration
+	url = https://github.com/Aggrex/Aggrex.ServiceRegistration.git
+[submodule "src/Aggrex.ServiceContainer"]
+	path = src/Aggrex.ServiceContainer
+	url = https://github.com/Aggrex/Aggrex.ServiceContainer.git
+[submodule "src/Aggrex.ConsensusProtocol"]
+	path = src/Aggrex.ConsensusProtocol
+	url = https://github.com/Aggrex/Aggrex.ConsensusProtocol.git
+[submodule "src/Aggrex.Common"]
+	path = src/Aggrex.Common
+	url = https://github.com/Aggrex/Aggrex.Common.git
+[submodule "src/Aggrex.Clients"]
+	path = src/Aggrex.Clients
+	url = https://github.com/Aggrex/Aggrex.Clients.git
+[submodule "src/Aggrex.Network"]
+	path = src/Aggrex.Network
+	url = https://github.com/Aggrex/Aggrex.Network.git
+[submodule "src/Aggrex.Neo"]
+	path = src/Aggrex.Neo
+	url = https://github.com/Aggrex/Aggrex.Neo.git
+[submodule "src/Aggrex.Configuration"]
+	path = src/Aggrex.Configuration
+	url = https://github.com/Aggrex/Aggrex.Configuration.git

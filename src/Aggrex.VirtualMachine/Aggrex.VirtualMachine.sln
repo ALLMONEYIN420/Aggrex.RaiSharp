@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.VirtualMachine", "Aggrex.VirtualMachine\Aggrex.VirtualMachine.csproj", "{C45855ED-3C4E-4515-89C9-043C030DDE5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C45855ED-3C4E-4515-89C9-043C030DDE5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C45855ED-3C4E-4515-89C9-043C030DDE5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C45855ED-3C4E-4515-89C9-043C030DDE5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C45855ED-3C4E-4515-89C9-043C030DDE5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D85D065F-5BBC-4DD6-B658-AEF5EC18D2D0}
+	EndGlobalSection
+EndGlobal

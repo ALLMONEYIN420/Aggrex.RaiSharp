@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="2.0.0" />
+    <PackageReference Include="Open.NAT.Core" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aggrex.Common\Aggrex.Common.csproj" />
+    <ProjectReference Include="..\Aggrex.Configuration\Aggrex.Configuration\Aggrex.Configuration.csproj" />
+    <ProjectReference Include="..\Aggrex.ServiceContainer\Aggrex.ServiceContainer.csproj" />
+  </ItemGroup>
+
+</Project>

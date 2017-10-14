@@ -9,7 +9,6 @@ using Aggrex.ConsensusProtocol.Messages;
 using Aggrex.ConsensusProtocol.Messages.Transaction;
 using Aggrex.ConsensusProtocol.Transaction;
 using Aggrex.Network;
-using Aggrex.ServiceContainer;
 using Autofac;
 
 namespace Aggrex.ConsensusProtocol
@@ -24,10 +23,12 @@ namespace Aggrex.ConsensusProtocol
         private readonly IPeerTracker _peerTracker;
         private readonly ClientSettings _clientSettings;
         private readonly IPEndPoint _seedNodeEndPoint;
+        private RemoteNode.Factory _remoteNodeFactory { get; set; }
 
         public LocalNode(INetworkListenerLoop networkListenerLoop,
             IUPnPPortForwarder portForwarder,
             ILocalIpAddressDiscoverer localIpAddressDiscoverer,
+            RemoteNode.Factory remoteNodeFactory,
             IPeerTracker peerTracker,
             ClientSettings clientSettings)
         {
@@ -38,6 +39,7 @@ namespace Aggrex.ConsensusProtocol
             _networkListenerLoop.ConnectionEstablished += HandleConnectionEstablished;
 
             _clientSettings = clientSettings;
+            _remoteNodeFactory = remoteNodeFactory;
 
             if (_clientSettings.BlockChainNetSettings.Net == "LocalNet")
             {
@@ -111,8 +113,7 @@ namespace Aggrex.ConsensusProtocol
 
         private void OnNodeConnectionEstablished(TcpClient client)
         {
-            IRemoteNode newNode = AggrexContainer.Container.Resolve<IRemoteNode>(new NamedParameter("client", client));
-
+            IRemoteNode newNode = _remoteNodeFactory.Invoke(client);
             newNode.ExecuteProtocolHandShake();
         }
 

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using Aggrex.Common;
 using Aggrex.Configuration;
-using Aggrex.ServiceContainer;
 using Autofac;
 
 namespace Aggrex.Network

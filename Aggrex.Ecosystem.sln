@@ -21,10 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Common", "src\Aggrex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.ConsensusProtocol", "src\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol.csproj", "{C359F2F2-A616-4F21-A75D-EB49FAB987EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.ServiceContainer", "src\Aggrex.ServiceContainer\Aggrex.ServiceContainer.csproj", "{A24F2B6F-CC21-4AF1-B3C4-DD0C9306E135}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.ServiceRegistration", "src\Aggrex.ServiceRegistration\Aggrex.ServiceRegistration.csproj", "{43823382-5F3B-4784-BB9C-8859ED28272C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.VirtualMachine", "src\Aggrex.VirtualMachine\Aggrex.VirtualMachine\Aggrex.VirtualMachine.csproj", "{4E36F6D7-E490-41A6-8EF0-217B9F94C3C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Network", "src\Aggrex.Network\Aggrex.Network.csproj", "{E879895A-30B1-4FB4-9F08-A9269D13E55F}"
@@ -69,14 +65,6 @@ Global
 		{C359F2F2-A616-4F21-A75D-EB49FAB987EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C359F2F2-A616-4F21-A75D-EB49FAB987EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C359F2F2-A616-4F21-A75D-EB49FAB987EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A24F2B6F-CC21-4AF1-B3C4-DD0C9306E135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A24F2B6F-CC21-4AF1-B3C4-DD0C9306E135}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A24F2B6F-CC21-4AF1-B3C4-DD0C9306E135}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A24F2B6F-CC21-4AF1-B3C4-DD0C9306E135}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43823382-5F3B-4784-BB9C-8859ED28272C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43823382-5F3B-4784-BB9C-8859ED28272C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43823382-5F3B-4784-BB9C-8859ED28272C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43823382-5F3B-4784-BB9C-8859ED28272C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E36F6D7-E490-41A6-8EF0-217B9F94C3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E36F6D7-E490-41A6-8EF0-217B9F94C3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E36F6D7-E490-41A6-8EF0-217B9F94C3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -13,11 +13,11 @@ namespace Aggrex.ServiceRegistration
         {
             ContainerBuilder builder = new ContainerBuilder();
 
-            ConfigurationContainerBuilder.BuildContainer(builder);
-
             ConsensusProtocolContainerBuilder.BuildContainer(builder);
 
             NetworkContainerBuilder.BuildContainer(builder);
+
+            builder.RegisterModule(new ConfigurationSettingsReader());
 
             AggrexContainer.Container = builder.Build();
         }

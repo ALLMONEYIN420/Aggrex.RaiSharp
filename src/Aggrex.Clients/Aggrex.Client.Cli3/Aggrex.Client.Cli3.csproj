@@ -10,9 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Aggrex.Configuration\Aggrex.Configuration\Aggrex.Configuration.csproj" />
+    <ProjectReference Include="..\..\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol.csproj" />
     <ProjectReference Include="..\..\Aggrex.Network\Aggrex.Network.csproj" />
-    <ProjectReference Include="..\..\Aggrex.ServiceContainer\Aggrex.ServiceContainer.csproj" />
-    <ProjectReference Include="..\..\Aggrex.ServiceRegistration\Aggrex.ServiceRegistration.csproj" />
   </ItemGroup>
 
   <ItemGroup>

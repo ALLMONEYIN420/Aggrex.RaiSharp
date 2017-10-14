@@ -1,25 +1,21 @@
-﻿using System;
-using Aggrex.Common;
-using Aggrex.ConsensusProtocol.HandShakes;
-using Aggrex.ConsensusProtocol.MessageProcessors;
+﻿using Aggrex.ConsensusProtocol.HandShakes;
 using Aggrex.ConsensusProtocol.MessageProcessors.Addresses;
 using Aggrex.ConsensusProtocol.Messages;
-using Aggrex.ConsensusProtocol.Messages.Addresses;
 using Aggrex.ConsensusProtocol.Transaction;
 using Aggrex.ConsensusProtocol.TransactionProcessors;
+using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
 using Aggrex.Network;
 using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Messages.MessageProcessor;
-using Aggrex.Network.Operations;
 using Aggrex.Network.Requests;
 using Autofac;
 
-namespace Aggrex.ConsensusProtocol
+namespace Aggrex.ConsensusProtocol.Ioc.Modules
 {
-    public static class ConsensusProtocolContainerBuilder
+    public class ConsensusProtocolModule : Module
     {
-        public static void BuildContainer(ContainerBuilder builder)
+        protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<LocalNode>()
                 .As<ILocalNode>()
@@ -34,21 +30,18 @@ namespace Aggrex.ConsensusProtocol
                 .SingleInstance();
 
             builder.RegisterType<PeerAddressesPayloadMessageProcessor>()
-                .As<IMessageProcessor<PeerAddressesPayloadMessage>>()
-                .SingleInstance();
+                .SingleInstance().Keyed<IMessageProcessor>(MessageType.PeerAddressesPayload);
 
             builder.RegisterType<RequestPeerAddressMessageProcessor>()
-                .As<IMessageProcessor<RequestPeerAddressesMessage>>()
-                .SingleInstance();
+                .SingleInstance().Keyed<IMessageProcessor>(MessageType.GetPeerAddresses);
+
+            builder.RegisterType<TransferTransactionProcessor>()
+                .SingleInstance().Keyed<ITransactionProcessor>(TransactionType.TransferTransaction);
 
             builder.RegisterType<TransactionDispatcher>()
                 .As<ITransactionDispatcher>()
                 .SingleInstance();
-
-            builder.RegisterType<TransferTransactionProcessor>()
-                .As<ITransactionProcessor<TransferTransaction>>()
-                .SingleInstance();
-
         }
     }
 }
+

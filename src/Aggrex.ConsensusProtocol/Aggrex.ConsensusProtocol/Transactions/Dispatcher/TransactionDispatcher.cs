@@ -1,38 +1,28 @@
 ﻿using System.IO;
+using Aggrex.ConsensusProtocol.Transaction;
+using Aggrex.ConsensusProtocol.TransactionProcessors;
 using Aggrex.Network;
-using Aggrex.Network.Messages.MessageProcessor;
 using Aggrex.Network.ObjectReader;
-using Aggrex.ServiceContainer;
-using Autofac;
+using Autofac.Features.Indexed;
 
-namespace Aggrex.ConsensusProtocol.Transaction
+namespace Aggrex.ConsensusProtocol.Transactions.Dispatcher
 {
-    public class TransactionDispatcher : ITransactionDispatcher
+    public class TransactionDispatcher : ITransactionDispatcher 
     {
         private IObjectReader _reader;
+        private IIndex<TransactionType, ITransactionProcessor> _transactionProcessors;
 
-        public TransactionDispatcher(IObjectReader reader)
+        public TransactionDispatcher(IObjectReader reader, IIndex<TransactionType, ITransactionProcessor> transactionProcessors)
         {
             _reader = reader;
+            _transactionProcessors = transactionProcessors;
         }
 
         public void DispatchTransaction(BinaryReader reader, IRemoteNode remoteNode)
         {
             TransactionType type = (TransactionType)reader.ReadByte();
-
-            switch (type)
-            {
-                case TransactionType.TransferTransaction:
-                    DispatchTransaction<TransferTransaction>(reader, remoteNode);
-                    break;
-            }
-        }
-
-        private void DispatchTransaction<T>(BinaryReader reader, IRemoteNode remoteNode) where T : BaseTransaction, new()
-        {
-            var transaction = _reader.ReadObject<T>(reader);
-            var processor = AggrexContainer.Container.Resolve<ITransactionProcessor<T>>();
-            processor.ProcessTransaction(transaction, remoteNode);
+            ITransactionProcessor processor = _transactionProcessors[type];
+            processor.ProcessTransaction(reader, remoteNode);
         }
     }
 }

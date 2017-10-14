@@ -1,9 +1,10 @@
-﻿using Aggrex.Network;
+﻿using System.IO;
+using Aggrex.Network;
 
-namespace Aggrex.ConsensusProtocol.Transaction
+namespace Aggrex.ConsensusProtocol.TransactionProcessors
 {
-    public interface ITransactionProcessor<T> where T : BaseTransaction
+    public interface ITransactionProcessor
     {
-        void ProcessTransaction(T transaction, IRemoteNode remoteNode);
+        void ProcessTransaction(BinaryReader reader, IRemoteNode remoteNode);
     }
 }

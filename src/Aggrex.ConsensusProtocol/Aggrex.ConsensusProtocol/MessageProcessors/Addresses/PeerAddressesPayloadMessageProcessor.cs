@@ -1,15 +1,20 @@
 ﻿using System;
+using System.IO;
 using Aggrex.ConsensusProtocol.Messages.Addresses;
 using Aggrex.Network;
 using Aggrex.Network.Messages.MessageProcessor;
+using Aggrex.Network.ObjectReader;
 
 namespace Aggrex.ConsensusProtocol.MessageProcessors.Addresses
 {
-    public class PeerAddressesPayloadMessageProcessor : IMessageProcessor<PeerAddressesPayloadMessage>
+    public class PeerAddressesPayloadMessageProcessor : IMessageProcessor
     {
         private readonly IPeerTracker _peerTracker;
-        public PeerAddressesPayloadMessageProcessor(IPeerTracker peerTracker)
+        private IObjectReader _objectReader;
+
+        public PeerAddressesPayloadMessageProcessor(IObjectReader objectReader, IPeerTracker peerTracker)
         {
+            _objectReader = objectReader;
             _peerTracker = peerTracker;
         }
 
@@ -30,6 +35,11 @@ namespace Aggrex.ConsensusProtocol.MessageProcessors.Addresses
                     Console.WriteLine($"Added new verified connected peer at: {responseIpEndPoint.Address}:{responseIpEndPoint.Port}");
                 }
             }
+        }
+
+        public void ProcessMessage(BinaryReader reader, IRemoteNode remoteNode)
+        {
+            ProcessMessage(_objectReader.ReadObject<PeerAddressesPayloadMessage>(reader), remoteNode);
         }
     }
 }

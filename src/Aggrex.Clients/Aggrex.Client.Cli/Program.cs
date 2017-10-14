@@ -3,8 +3,9 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using Aggrex.ServiceContainer;
-using Aggrex.ServiceRegistration;
+using Aggrex.Configuration.Modules;
+using Aggrex.ConsensusProtocol.Ioc.Modules;
+using Aggrex.Network.Modules;
 using Autofac;
 
 namespace Aggrex.Client.Cli
@@ -15,12 +16,21 @@ namespace Aggrex.Client.Cli
         {
             Console.Title = "Seed Peer";
 
-            AggrexServiceRegistraction.RegisterServices();
+            ContainerBuilder builder = new ContainerBuilder();
 
-            ILocalNode node = AggrexContainer.Container.Resolve<ILocalNode>();
-            node.Start();
+            builder.RegisterModule<ConfigurationModule>();
+            builder.RegisterModule<ConsensusProtocolModule>();
+            builder.RegisterModule<NetworkModule>();
 
-            Console.ReadKey();
+            var container = builder.Build();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                ILocalNode node = scope.Resolve<ILocalNode>();
+                node.Start();
+
+                Console.ReadKey();
+            }
         }
     }
 }

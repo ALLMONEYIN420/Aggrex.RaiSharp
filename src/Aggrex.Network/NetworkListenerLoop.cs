@@ -7,7 +7,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Aggrex.Configuration;
-using Aggrex.ServiceContainer;
 using Autofac;
 
 namespace Aggrex.Network

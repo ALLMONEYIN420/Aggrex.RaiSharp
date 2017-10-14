@@ -6,10 +6,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Aggrex.Common;
+using Aggrex.Configuration.Modules;
+using Aggrex.ConsensusProtocol.Ioc.Modules;
 using Aggrex.Network;
+using Aggrex.Network.Modules;
 using Aggrex.Network.Requests;
-using Aggrex.ServiceContainer;
-using Aggrex.ServiceRegistration;
 using Autofac;
 
 namespace Aggrex.Client.Cli2
@@ -20,12 +21,22 @@ namespace Aggrex.Client.Cli2
         {
             Console.Title = "P2";
 
-            AggrexServiceRegistraction.RegisterServices();
+            ContainerBuilder builder = new ContainerBuilder();
 
-            ILocalNode node = AggrexContainer.Container.Resolve<ILocalNode>();
-            node.Start();
+            builder.RegisterModule<ConfigurationModule>();
+            builder.RegisterModule<ConsensusProtocolModule>();
+            builder.RegisterModule<NetworkModule>();
 
-            Console.ReadKey();
+            var container = builder.Build();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                ILocalNode node = scope.Resolve<ILocalNode>();
+                node.Start();
+
+                Console.ReadKey();
+            }
+
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Net;
+using Aggrex.Configuration.Modules;
+using Aggrex.ConsensusProtocol.Ioc.Modules;
 using Aggrex.Network;
-using Aggrex.ServiceContainer;
-using Aggrex.ServiceRegistration;
+using Aggrex.Network.Modules;
 using Autofac;
 
 namespace Aggrex.Client.Cli4
@@ -13,12 +14,21 @@ namespace Aggrex.Client.Cli4
         {
             Console.Title = "P4";
 
-            AggrexServiceRegistraction.RegisterServices();
+            ContainerBuilder builder = new ContainerBuilder();
 
-            ILocalNode node = AggrexContainer.Container.Resolve<ILocalNode>();
-            node.Start();
+            builder.RegisterModule<ConfigurationModule>();
+            builder.RegisterModule<ConsensusProtocolModule>();
+            builder.RegisterModule<NetworkModule>();
 
-            Console.ReadKey();
+            var container = builder.Build();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                ILocalNode node = scope.Resolve<ILocalNode>();
+                node.Start();
+
+                Console.ReadKey();
+            }
         }
     }
 }

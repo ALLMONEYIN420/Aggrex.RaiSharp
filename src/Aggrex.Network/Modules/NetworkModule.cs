@@ -1,12 +1,14 @@
-﻿using Aggrex.Network.ObjectReader;
-using Aggrex.Network.Requests;
+﻿using Aggrex.Network.HandShakes;
+using Aggrex.Network.Messages;
+using Aggrex.Network.Messages.MessageProcessor;
+using Aggrex.Network.ObjectReader;
 using Autofac;
 
-namespace Aggrex.Network
+namespace Aggrex.Network.Modules
 {
-    public static class NetworkContainerBuilder
+    public class NetworkModule : Module
     {
-        public static void BuildContainer(ContainerBuilder builder)
+        protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<NetworkListenerLoop>()
                 .As<INetworkListenerLoop>()
@@ -19,6 +21,7 @@ namespace Aggrex.Network
 
             builder.RegisterType<RemoteNode>()
                 .As<IRemoteNode>()
+                .AsSelf()
                 .InstancePerDependency();
 
             builder.RegisterType<UPnPPortForwarder>()
@@ -35,3 +38,4 @@ namespace Aggrex.Network
         }
     }
 }
+

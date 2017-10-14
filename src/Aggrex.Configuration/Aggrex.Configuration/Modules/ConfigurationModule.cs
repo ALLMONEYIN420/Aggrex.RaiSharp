@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
 
-namespace Aggrex.Configuration
+namespace Aggrex.Configuration.Modules
 {
-    public static class ConfigurationContainerBuilder
+    public class ConfigurationModule : Module
     {
-        public static void BuildContainer(ContainerBuilder builder)
+        protected override void Load(ContainerBuilder builder)
         {
             ConfigurationSettingsProvider provider = new ConfigurationSettingsProvider();
 

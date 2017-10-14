@@ -13,13 +13,14 @@ using Aggrex.Common;
 using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Requests;
-using Aggrex.ServiceContainer;
 using Autofac;
 
 namespace Aggrex.Network
 {
-    internal class RemoteNode : IRemoteNode
+    public class RemoteNode : IRemoteNode
     {
+        public delegate RemoteNode Factory(TcpClient client);
+
         private readonly IMessageDispatcher _messageDispatcher;
         private readonly IHandShakeProcessor _handShakeProcessor;
 
@@ -28,13 +29,13 @@ namespace Aggrex.Network
         private readonly CancellationTokenSource _cancellationTokenSource;
         private bool _isConncected;
 
-        public RemoteNode(TcpClient client, IHandShakeProcessor handShakeProcessor)
+        public RemoteNode(TcpClient client, IHandShakeProcessor handShakeProcessor, IMessageDispatcher messageDispatcher)
         {
             _handShakeProcessor = handShakeProcessor;
 
             _client = client;
             _requestQueue = new BlockingCollection<BaseMessage>();
-            _messageDispatcher = AggrexContainer.Container.Resolve<IMessageDispatcher>();
+            _messageDispatcher = messageDispatcher;
             _isConncected = false;
             _cancellationTokenSource = new CancellationTokenSource();
         }
@@ -80,7 +81,7 @@ namespace Aggrex.Network
 
         public void ExecuteProtocolLoop()
         {
-            _client.ReceiveTimeout = 10000;
+            _client.ReceiveTimeout = 100000;
 
             using (var networkStream = _client.GetStream())
             {

@@ -22,9 +22,9 @@ namespace Aggrex.Application
         #region IBootstapper Implementation 
         public void Startup()
         {
-            this.RegisterModules();
+            RegisterModules();
 
-            this.StartLocalNode();
+            StartLocalNode();
         }
 
         public void Shutdown()
@@ -42,12 +42,12 @@ namespace Aggrex.Application
             builder.RegisterModule<ConsensusProtocolModule>();
             builder.RegisterModule<NetworkModule>();
 
-            this._container = builder.Build();
+            _container = builder.Build();
         }
 
         public void StartLocalNode()
         {
-            using (var scope = this._container.BeginLifetimeScope())
+            using (var scope = _container.BeginLifetimeScope())
             {
                 var node = scope.Resolve<ILocalNode>();
                 node.Start();

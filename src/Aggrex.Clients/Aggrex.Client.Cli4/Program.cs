@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Aggrex.Application;
 using Aggrex.Configuration.Modules;
 using Aggrex.ConsensusProtocol.Ioc.Modules;
 using Aggrex.Network;
@@ -14,21 +15,10 @@ namespace Aggrex.Client.Cli4
         {
             Console.Title = "P4";
 
-            ContainerBuilder builder = new ContainerBuilder();
+            var networkBootstrapper = new Bootstrapper();
+            networkBootstrapper.Startup();
 
-            builder.RegisterModule<ConfigurationModule>();
-            builder.RegisterModule<ConsensusProtocolModule>();
-            builder.RegisterModule<NetworkModule>();
-
-            var container = builder.Build();
-
-            using (var scope = container.BeginLifetimeScope())
-            {
-                ILocalNode node = scope.Resolve<ILocalNode>();
-                node.Start();
-
-                Console.ReadKey();
-            }
+            Console.ReadKey();
         }
     }
 }

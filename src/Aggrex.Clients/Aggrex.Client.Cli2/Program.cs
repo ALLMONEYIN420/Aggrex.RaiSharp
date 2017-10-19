@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Globalization;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using Aggrex.Common;
-using Aggrex.Configuration.Modules;
-using Aggrex.ConsensusProtocol.Ioc.Modules;
-using Aggrex.Network;
-using Aggrex.Network.Modules;
-using Aggrex.Network.Requests;
-using Autofac;
+using Aggrex.Application;
 
 namespace Aggrex.Client.Cli2
 {
@@ -21,22 +9,10 @@ namespace Aggrex.Client.Cli2
         {
             Console.Title = "P2";
 
-            ContainerBuilder builder = new ContainerBuilder();
+            var networkBootstrapper = new Bootstrapper();
+            networkBootstrapper.Startup();
 
-            builder.RegisterModule<ConfigurationModule>();
-            builder.RegisterModule<ConsensusProtocolModule>();
-            builder.RegisterModule<NetworkModule>();
-
-            var container = builder.Build();
-
-            using (var scope = container.BeginLifetimeScope())
-            {
-                ILocalNode node = scope.Resolve<ILocalNode>();
-                node.Start();
-
-                Console.ReadKey();
-            }
-
+            Console.ReadKey();
         }
     }
 }

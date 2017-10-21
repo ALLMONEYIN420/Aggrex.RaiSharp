@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Net;
-using Aggrex.Configuration.Modules;
-using Aggrex.ConsensusProtocol.Ioc.Modules;
-using Aggrex.Network;
-using Aggrex.Network.Modules;
-using Autofac;
+using Aggrex.Application;
 
 namespace Aggrex.Client.Cli3
 {
@@ -14,21 +9,10 @@ namespace Aggrex.Client.Cli3
         {
             Console.Title = "P3";
 
-            ContainerBuilder builder = new ContainerBuilder();
+            var networkBootstrapper = new Bootstrapper();
+            networkBootstrapper.Startup();
 
-            builder.RegisterModule<ConfigurationModule>();
-            builder.RegisterModule<ConsensusProtocolModule>();
-            builder.RegisterModule<NetworkModule>();
-
-            var container = builder.Build();
-
-            using (var scope = container.BeginLifetimeScope())
-            {
-                ILocalNode node = scope.Resolve<ILocalNode>();
-                node.Start();
-
-                Console.ReadKey();
-            }
+            Console.ReadKey();
         }
     }
 }

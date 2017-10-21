@@ -9,17 +9,8 @@ namespace Aggrex.Application
 {
     public class Bootstrapper : IBootstapper
     {
-        #region Private Fields 
         private IContainer _container;
-        #endregion
 
-        #region Constructor
-        public Bootstrapper()
-        {
-        }
-        #endregion
-
-        #region IBootstapper Implementation 
         public void Startup()
         {
             RegisterModules();
@@ -30,13 +21,9 @@ namespace Aggrex.Application
         public void Shutdown()
         {
         }
-        #endregion
 
-        #region Private Methods 
         private void RegisterModules()
         {
-            var executingAssembly = Assembly.GetExecutingAssembly();
-
             var builder = new ContainerBuilder();
             builder.RegisterModule<ConfigurationModule>();
             builder.RegisterModule<ConsensusProtocolModule>();
@@ -53,6 +40,5 @@ namespace Aggrex.Application
                 node.Start();
             }
         }
-        #endregion
     }
 }

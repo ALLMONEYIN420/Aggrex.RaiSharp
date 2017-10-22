@@ -15,7 +15,7 @@ namespace Aggrex.ConsensusProtocol.Messages
     public class MessageDispatcher : IMessageDispatcher
     {
         private readonly ITransactionDispatcher _transactionDispatcher;
-        private IIndex<MessageType, IMessageProcessor> _messageProcessors;
+        private readonly IIndex<MessageType, IMessageProcessor> _messageProcessors;
 
         public MessageDispatcher(ITransactionDispatcher transactionDispatcher,
         IIndex<MessageType, IMessageProcessor> messageProcessors)

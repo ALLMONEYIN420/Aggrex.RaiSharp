@@ -14,16 +14,12 @@ namespace Aggrex.ConsensusProtocol.Messages
 {
     public class MessageDispatcher : IMessageDispatcher
     {
-        private readonly IObjectReader _reader;
         private readonly ITransactionDispatcher _transactionDispatcher;
         private IIndex<MessageType, IMessageProcessor> _messageProcessors;
 
-
-        public MessageDispatcher(IObjectReader reader, 
-            ITransactionDispatcher transactionDispatcher,
+        public MessageDispatcher(ITransactionDispatcher transactionDispatcher,
         IIndex<MessageType, IMessageProcessor> messageProcessors)
         {
-            _reader = reader;
             _transactionDispatcher = transactionDispatcher;
             _messageProcessors = messageProcessors;
         }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Numerics;
-using BitSharp.Common;
-using BitSharp.Common.ExtensionMethods;
 
 namespace Aggrex.Common.BitSharp
 {

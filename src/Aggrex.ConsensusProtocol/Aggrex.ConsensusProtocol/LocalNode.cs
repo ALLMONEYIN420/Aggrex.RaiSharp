@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Aggrex.Common;
 using Aggrex.Configuration;
 using Aggrex.ConsensusProtocol.Messages;
+using Aggrex.ConsensusProtocol.Messages.Addresses;
 using Aggrex.ConsensusProtocol.Messages.Transaction;
-using Aggrex.ConsensusProtocol.Transaction;
+using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.Network;
 using Autofac;
 

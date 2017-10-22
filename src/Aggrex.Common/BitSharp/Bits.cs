@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Aggrex.Common.BitSharp;
 
-namespace BitSharp.Common
+namespace Aggrex.Common.BitSharp
 {
     public static class Bits
     {

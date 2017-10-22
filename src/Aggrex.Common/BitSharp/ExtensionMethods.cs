@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,9 +7,8 @@ using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
-using Aggrex.Common.BitSharp;
 
-namespace BitSharp.Common.ExtensionMethods
+namespace Aggrex.Common.BitSharp
 {
     public static class ExtensionMethods
     {

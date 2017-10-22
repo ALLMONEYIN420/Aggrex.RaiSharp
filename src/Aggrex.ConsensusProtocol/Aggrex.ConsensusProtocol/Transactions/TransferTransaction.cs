@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Aggrex.ConsensusProtocol.Transaction
+namespace Aggrex.ConsensusProtocol.Transactions
 {
     public class TransferTransaction : BaseTransaction
     {

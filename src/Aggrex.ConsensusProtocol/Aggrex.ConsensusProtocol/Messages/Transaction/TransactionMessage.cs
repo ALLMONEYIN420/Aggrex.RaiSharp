@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Aggrex.ConsensusProtocol.Transaction;
+using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Requests;
 

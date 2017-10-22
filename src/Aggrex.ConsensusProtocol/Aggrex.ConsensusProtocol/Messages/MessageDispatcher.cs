@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Aggrex.ConsensusProtocol.Messages.Addresses;
-using Aggrex.ConsensusProtocol.Transaction;
 using Aggrex.ConsensusProtocol.TransactionProcessors;
+using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
 using Aggrex.Network;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Messages.MessageProcessor;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Aggrex.ConsensusProtocol.Transaction;
+using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.Network;
 using Aggrex.Network.ObjectReader;
 using Autofac.Features.AttributeFilters;

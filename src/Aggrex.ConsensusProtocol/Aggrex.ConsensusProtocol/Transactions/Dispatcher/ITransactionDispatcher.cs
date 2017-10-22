@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Aggrex.Network;
 
-namespace Aggrex.ConsensusProtocol.Transaction
+namespace Aggrex.ConsensusProtocol.Transactions.Dispatcher
 {
     public interface ITransactionDispatcher
     {

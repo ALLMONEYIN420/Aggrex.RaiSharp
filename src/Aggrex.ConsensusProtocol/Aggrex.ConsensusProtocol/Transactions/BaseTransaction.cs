@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using Aggrex.Common;
-using Aggrex.Network.Requests;
 
-namespace Aggrex.ConsensusProtocol.Transaction
+namespace Aggrex.ConsensusProtocol.Transactions
 {
     public abstract class BaseTransaction : IStreamable
     {

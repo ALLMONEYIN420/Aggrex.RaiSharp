@@ -1,8 +1,8 @@
 ﻿using Aggrex.ConsensusProtocol.HandShakes;
 using Aggrex.ConsensusProtocol.MessageProcessors.Addresses;
 using Aggrex.ConsensusProtocol.Messages;
-using Aggrex.ConsensusProtocol.Transaction;
 using Aggrex.ConsensusProtocol.TransactionProcessors;
+using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
 using Aggrex.Network;
 using Aggrex.Network.HandShakes;

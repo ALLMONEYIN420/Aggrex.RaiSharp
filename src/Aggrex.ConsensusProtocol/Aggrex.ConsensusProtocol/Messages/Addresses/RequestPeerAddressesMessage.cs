@@ -3,7 +3,7 @@ using Aggrex.Common;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Requests;
 
-namespace Aggrex.ConsensusProtocol.Messages
+namespace Aggrex.ConsensusProtocol.Messages.Addresses
 {
     public class RequestPeerAddressesMessage : BaseMessage, IStreamable
     {

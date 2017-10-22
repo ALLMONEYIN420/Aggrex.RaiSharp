@@ -1,4 +1,4 @@
-﻿namespace Aggrex.ConsensusProtocol.Transaction
+﻿namespace Aggrex.ConsensusProtocol.Transactions
 {
     public enum TransactionType
     {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using Aggrex.ConsensusProtocol.Transactions;
+using Aggrex.Database;
+using Aggrex.Database.Models;
 using Aggrex.Network;
 using Aggrex.Network.ObjectReader;
 using Autofac.Features.AttributeFilters;
@@ -9,20 +11,24 @@ namespace Aggrex.ConsensusProtocol.TransactionProcessors
 {
     public class TransferTransactionProcessor : ITransactionProcessor
     {
-        private IPeerTracker _peerTracker;
         private IObjectReader _objectReader;
+        private IRepository<TransferTransactionModel> _transferTransactionRepository;
 
         public TransferTransactionProcessor(
-        IPeerTracker peerTracker,
-        IObjectReader objectReader)
+            IRepository<TransferTransactionModel> transferTransactionRepository,
+            IObjectReader objectReader)
         {
-            _peerTracker = peerTracker;
+            _transferTransactionRepository = transferTransactionRepository;
             _objectReader = objectReader;
         }
 
         public void ProcessTransaction(TransferTransaction transaction, IRemoteNode remoteNode)
         {
             Console.WriteLine("Received a transfer transaction!");
+            _transferTransactionRepository.Insert(new TransferTransactionModel
+            {
+                Amount = transaction.Amount
+            });
         }
 
         public void ProcessTransaction(BinaryReader reader, IRemoteNode remoteNode)

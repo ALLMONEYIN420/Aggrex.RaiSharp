@@ -8,11 +8,13 @@ namespace Aggrex.ConsensusProtocol.Transactions
 
         public byte[] ScriptSig { get; set; }
         public byte[] ScriptPubKey { get; set; }
+        public double Amount { get; set; }
 
         protected override void WriteProperties(BinaryWriter writer)
         {
             writer.Write(ScriptSig?.Length ?? 0);
             writer.Write(ScriptPubKey?.Length ?? 0);
+            writer.Write(Amount);
         }
 
         protected override void ReadProperties(BinaryReader reader)
@@ -22,6 +24,8 @@ namespace Aggrex.ConsensusProtocol.Transactions
 
             var scriptPubKeyLength = reader.ReadInt32();
             ScriptPubKey = reader.ReadBytes(scriptPubKeyLength);
+
+            Amount = reader.ReadDouble();
         }
     }
 }

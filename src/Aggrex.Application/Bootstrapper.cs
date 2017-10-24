@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Aggrex.Configuration.Modules;
 using Aggrex.ConsensusProtocol.Ioc.Modules;
+using Aggrex.Database.LiteDB.Modules;
 using Aggrex.Network;
 using Aggrex.Network.Modules;
 using Autofac;
@@ -28,6 +29,7 @@ namespace Aggrex.Application
             builder.RegisterModule<ConfigurationModule>();
             builder.RegisterModule<ConsensusProtocolModule>();
             builder.RegisterModule<NetworkModule>();
+            builder.RegisterModule<LiteDBModule>();
 
             _container = builder.Build();
         }

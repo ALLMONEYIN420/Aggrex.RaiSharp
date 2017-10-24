@@ -26,26 +26,4 @@ namespace Aggrex.ConsensusProtocol.Messages.Transaction
             Transaction.ReadFromStream(reader);
         }
     }
-
-    //public class TransactionMessage<T> : TransactionMessage where T : new()
-    //{
-    //    public override MessageType MessageType => MessageType.Transaction;
-
-    //    public BaseTransaction Transaction { get; }
-
-
-
-    //    protected override void WriteProperties(BinaryWriter writer)
-    //    {
-    //    }
-
-    //    protected override void ReadProperties(BinaryReader reader)
-    //    {
-    //    }
-
-    //    public TransactionMessage(BaseTransaction transaction) : base(transaction)
-    //    {
-    //    }
-    //}
-
 }

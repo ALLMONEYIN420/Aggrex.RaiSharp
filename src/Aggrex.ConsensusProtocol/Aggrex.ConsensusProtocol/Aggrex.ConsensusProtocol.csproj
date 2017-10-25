@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Aggrex.Common\Aggrex.Common.csproj" />
     <ProjectReference Include="..\..\Aggrex.Database\Aggrex.Database.csproj" />
+    <ProjectReference Include="..\..\Aggrex.Framework\Aggrex.Framework.csproj" />
     <ProjectReference Include="..\..\Aggrex.Network\Aggrex.Network.csproj" />
   </ItemGroup>
 

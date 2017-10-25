@@ -35,6 +35,10 @@ namespace Aggrex.Network.Modules
             builder.RegisterType<LocalIpAddressDiscoverer>()
                 .As<ILocalIpAddressDiscoverer>()
                 .SingleInstance();
+
+            builder.RegisterType<DeterministicNetworkIdGenerator>()
+                .As<IDeterministicNetworkIdGenerator>()
+                .SingleInstance();
         }
     }
 }

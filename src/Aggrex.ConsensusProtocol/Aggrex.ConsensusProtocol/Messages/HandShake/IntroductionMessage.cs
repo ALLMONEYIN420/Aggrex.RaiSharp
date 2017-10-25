@@ -10,6 +10,7 @@ namespace Aggrex.ConsensusProtocol.Messages.HandShake
     {
         public Version Version { get; set; }
         public ulong BlockHeight { get; set; }
+        public string DNID { get; set; }
         public int Port { get; set; }
 
         #region Serialization
@@ -21,6 +22,7 @@ namespace Aggrex.ConsensusProtocol.Messages.HandShake
             writer.Write(Version.ToString(2));
             writer.Write(BlockHeight);
             writer.Write(Port);
+            writer.Write(DNID);
         }
 
         protected override void ReadProperties(BinaryReader reader)
@@ -28,6 +30,7 @@ namespace Aggrex.ConsensusProtocol.Messages.HandShake
             Version = Version.Parse(reader.ReadString());
             BlockHeight = reader.ReadUInt64();
             Port = reader.ReadInt32();
+            DNID = reader.ReadString();
         }
 
         #endregion

@@ -16,10 +16,15 @@ namespace Aggrex.ConsensusProtocol.HandShakes
     {
         private readonly ClientSettings _clientSettings;
         private readonly IPeerTracker _peerTracker;
-        public HandShakeProcessor(ClientSettings clientSettings, IPeerTracker peerTracker)
+        private readonly IDeterministicNetworkIdGenerator _deterministicNetworkIdGenerator;
+        public HandShakeProcessor(
+            ClientSettings clientSettings, 
+            IPeerTracker peerTracker, 
+            IDeterministicNetworkIdGenerator deterministicNetworkIdGenerator)
         {
             _clientSettings = clientSettings;
             _peerTracker = peerTracker;
+            _deterministicNetworkIdGenerator = deterministicNetworkIdGenerator;
         }
 
         public void ProcessHandShake(BinaryReader reader, IRemoteNode remoteNode)
@@ -28,6 +33,7 @@ namespace Aggrex.ConsensusProtocol.HandShakes
             messageToSend.BlockHeight = 100;
             messageToSend.Version = new Version(_clientSettings.Version);
             messageToSend.Port = _clientSettings.BlockChainNetSettings.ListenPortOverride ?? _clientSettings.ListenPort;
+            messageToSend.DNID = _deterministicNetworkIdGenerator.GenerateNetworkId;
 
             remoteNode.QueueMessage(messageToSend);
 

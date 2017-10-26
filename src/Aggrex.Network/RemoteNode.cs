@@ -66,6 +66,8 @@ namespace Aggrex.Network
             }
         }
 
+        public string DNID { get; set; }
+
         public bool QueueContainsMessageType<T>() where T : BaseMessage
         {
             return _requestQueue.Any(x => x.GetType() == typeof(T));

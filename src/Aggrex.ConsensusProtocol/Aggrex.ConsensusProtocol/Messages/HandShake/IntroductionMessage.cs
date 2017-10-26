@@ -13,8 +13,6 @@ namespace Aggrex.ConsensusProtocol.Messages.HandShake
         public string DNID { get; set; }
         public int Port { get; set; }
 
-        #region Serialization
-
         public override MessageType MessageType => MessageType.Introduction;
 
         protected override void WriteProperties(BinaryWriter writer)
@@ -32,8 +30,5 @@ namespace Aggrex.ConsensusProtocol.Messages.HandShake
             Port = reader.ReadInt32();
             DNID = reader.ReadString();
         }
-
-        #endregion
-
     }
 }

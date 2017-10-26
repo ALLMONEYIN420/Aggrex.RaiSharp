@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using Aggrex.Common;
 using Aggrex.Configuration;
+using Aggrex.Framework;
 using Autofac;
 
 namespace Aggrex.Network
@@ -16,6 +17,8 @@ namespace Aggrex.Network
         private readonly HashSet<IPEndPoint> _notConnectedPeers;
 
         private readonly ClientSettings _clientSettings;
+
+        private readonly IActiveNodeSet _activeNodeSet;
 
         private readonly int MAX_CONNECTED_PEER_COUNT = 10;
 
@@ -60,12 +63,14 @@ namespace Aggrex.Network
 
         public ILocalNode LocalNode { get; set; }
 
-        public PeerTracker(ClientSettings clientSettings)
+        public PeerTracker(ClientSettings clientSettings, IActiveNodeSet activeNodeSet)
         {
             _clientSettings = clientSettings;
 
             _connectedPeers = new ConcurrentDictionary<string, IRemoteNode>();
             _notConnectedPeers = new HashSet<IPEndPoint>();
+
+            _activeNodeSet = activeNodeSet;
         }
 
         public bool TryAddNewConnectedPeer(IRemoteNode peer)
@@ -75,6 +80,9 @@ namespace Aggrex.Network
             {
                 return false;
             }
+
+            _activeNodeSet.Add(peer.DNID);
+
 
             lock (_notConnectedPeers)
             {

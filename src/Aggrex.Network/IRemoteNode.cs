@@ -20,6 +20,8 @@ namespace Aggrex.Network
 
         void QueueMessage(BaseMessage message);
 
+        string DNID { get; set; }
+
         bool QueueContainsMessageType<T>() where T : BaseMessage;
 
         event EventHandler Disconnected;

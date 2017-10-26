@@ -4,6 +4,7 @@ using Aggrex.ConsensusProtocol.Messages;
 using Aggrex.ConsensusProtocol.TransactionProcessors;
 using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
+using Aggrex.Framework;
 using Aggrex.Network;
 using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
@@ -27,6 +28,10 @@ namespace Aggrex.ConsensusProtocol.Ioc.Modules
 
             builder.RegisterType<HandShakeProcessor>()
                 .As<IHandShakeProcessor>()
+                .SingleInstance();
+
+            builder.RegisterType<ActiveNodeSet>()
+                .As<IActiveNodeSet>()
                 .SingleInstance();
 
             builder.RegisterType<PeerAddressesPayloadMessageProcessor>()

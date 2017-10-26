@@ -53,6 +53,7 @@ namespace Aggrex.ConsensusProtocol.HandShakes
             }
 
             remoteNode.ListenerEndpoint = new IPEndPoint(remoteNode.RemoteEndPoint.Address, receivedMessage.Port);
+            remoteNode.DNID = receivedMessage.DNID;
 
             if (_peerTracker.TryAddNewConnectedPeer(remoteNode))
             {

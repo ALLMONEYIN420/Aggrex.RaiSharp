@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Aggrex.Common;
 using Aggrex.Configuration;
 using Aggrex.ConsensusProtocol.Messages;
+using Aggrex.ConsensusProtocol.Messages.ActiveNodeSet;
 using Aggrex.ConsensusProtocol.Messages.Addresses;
 using Aggrex.ConsensusProtocol.Messages.Transaction;
 using Aggrex.ConsensusProtocol.Transactions;
@@ -83,8 +84,11 @@ namespace Aggrex.ConsensusProtocol
                         if (!remoteNode.QueueContainsMessageType<RequestPeerAddressesMessage>())
                         {
                             remoteNode.QueueMessage(new RequestPeerAddressesMessage());
-                            var transMessage = new TransactionMessage(new TransferTransaction());
-                            remoteNode.QueueMessage(transMessage);
+                        }
+
+                        if (!remoteNode.QueueContainsMessageType<RequestActiveNodeSetMessage>())
+                        {
+                            remoteNode.QueueMessage(new RequestActiveNodeSetMessage());
                         }
                     }
 

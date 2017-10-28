@@ -1,4 +1,5 @@
 ﻿using Aggrex.ConsensusProtocol.HandShakes;
+using Aggrex.ConsensusProtocol.MessageProcessors.ActiveNodeSet;
 using Aggrex.ConsensusProtocol.MessageProcessors.Addresses;
 using Aggrex.ConsensusProtocol.Messages;
 using Aggrex.ConsensusProtocol.TransactionProcessors;
@@ -34,11 +35,17 @@ namespace Aggrex.ConsensusProtocol.Ioc.Modules
                 .As<IActiveNodeSet>()
                 .SingleInstance();
 
+            builder.RegisterType<ActiveNodeSetPayloadMessageProcessor>()
+                .SingleInstance().Keyed<IMessageProcessor>(MessageType.ActiveNodeSetPayload);
+
+            builder.RegisterType<RequestActiveNodeSetMessageProcessor>()
+                .SingleInstance().Keyed<IMessageProcessor>(MessageType.RequestActiveNodeSet);
+
             builder.RegisterType<PeerAddressesPayloadMessageProcessor>()
                 .SingleInstance().Keyed<IMessageProcessor>(MessageType.PeerAddressesPayload);
 
             builder.RegisterType<RequestPeerAddressMessageProcessor>()
-                .SingleInstance().Keyed<IMessageProcessor>(MessageType.GetPeerAddresses);
+                .SingleInstance().Keyed<IMessageProcessor>(MessageType.RequestPeerAddresses);
 
             builder.RegisterType<TransferTransactionProcessor>()
                 .SingleInstance().Keyed<ITransactionProcessor>(TransactionType.TransferTransaction);

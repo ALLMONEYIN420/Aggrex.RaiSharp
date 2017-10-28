@@ -28,8 +28,8 @@ namespace Aggrex.ConsensusProtocol.Messages
         {
             switch (messageType)
             {
-                case MessageType.GetPeerAddresses:
-                    _messageProcessors[MessageType.GetPeerAddresses].ProcessMessage(reader, remoteNode);
+                case MessageType.RequestPeerAddresses:
+                    _messageProcessors[MessageType.RequestPeerAddresses].ProcessMessage(reader, remoteNode);
                     break;
 
                 case MessageType.PeerAddressesPayload:

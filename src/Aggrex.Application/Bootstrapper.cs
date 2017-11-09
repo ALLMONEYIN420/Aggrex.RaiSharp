@@ -7,6 +7,7 @@ using Aggrex.Logging.Modules;
 using Aggrex.Network;
 using Aggrex.Network.Modules;
 using Autofac;
+using Microsoft.Extensions.Logging;
 
 namespace Aggrex.Application
 {
@@ -42,7 +43,9 @@ namespace Aggrex.Application
             using (var scope = _container.BeginLifetimeScope())
             {
                 var idGenerator = scope.Resolve<IDeterministicNetworkIdGenerator>();
-                Console.WriteLine($"Id: {idGenerator.GenerateNetworkId}");
+
+                var logger = scope.Resolve<ILoggerFactory>().CreateLogger<Bootstrapper>();
+                logger.LogInformation($"Id: {idGenerator.GenerateNetworkId}");
 
                 var node = scope.Resolve<ILocalNode>();
                 node.Start();

@@ -10,6 +10,7 @@ using Aggrex.ConsensusProtocol.Messages.ActiveNodeSet;
 using Aggrex.ConsensusProtocol.Messages.Addresses;
 using Aggrex.ConsensusProtocol.Messages.Transaction;
 using Aggrex.ConsensusProtocol.Transactions;
+using Aggrex.Framework;
 using Aggrex.Network;
 using Autofac;
 
@@ -27,7 +28,8 @@ namespace Aggrex.ConsensusProtocol
         private readonly IPEndPoint _seedNodeEndPoint;
         private RemoteNode.Factory _remoteNodeFactory { get; set; }
 
-        public LocalNode(INetworkListenerLoop networkListenerLoop,
+        public LocalNode(
+            INetworkListenerLoop networkListenerLoop,
             IUPnPPortForwarder portForwarder,
             ILocalIpAddressDiscoverer localIpAddressDiscoverer,
             RemoteNode.Factory remoteNodeFactory,
@@ -47,6 +49,7 @@ namespace Aggrex.ConsensusProtocol
             {
                 _seedNodeEndPoint = new IPEndPoint(IPAddress.Parse(localIpAddressDiscoverer.GetLocalIpAddress()), _clientSettings.ListenPort);
             }
+
             int port = _clientSettings.BlockChainNetSettings?.ListenPortOverride ?? _clientSettings.ListenPort;
             LocalAddress = new IPEndPoint(IPAddress.Parse(localIpAddressDiscoverer.GetLocalIpAddress()), port);
 

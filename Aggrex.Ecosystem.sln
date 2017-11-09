@@ -33,13 +33,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Neo", "src\Aggrex.Ne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Application", "src\Aggrex.Application\Aggrex.Application.csproj", "{D9DF650B-A621-481F-B417-A89032CC67D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.Wallet", "src\Aggrex.Wallet\Aggrex.Wallet.csproj", "{C266D605-E4A3-4D17-8A31-85FFEAAED5A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Wallet", "src\Aggrex.Wallet\Aggrex.Wallet.csproj", "{C266D605-E4A3-4D17-8A31-85FFEAAED5A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.Database", "src\Aggrex.Database\Aggrex.Database.csproj", "{572C18D0-A1DE-4179-9CE2-019606449D68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Database", "src\Aggrex.Database\Aggrex.Database.csproj", "{572C18D0-A1DE-4179-9CE2-019606449D68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.Database.LiteDB", "src\Aggrex.Database.LiteDB\Aggrex.Database.LiteDB.csproj", "{85C4E101-342E-4670-97F1-2B3A6051F226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Database.LiteDB", "src\Aggrex.Database.LiteDB\Aggrex.Database.LiteDB.csproj", "{85C4E101-342E-4670-97F1-2B3A6051F226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.Framework", "src\Aggrex.Framework\Aggrex.Framework.csproj", "{ADB98D2E-F041-44E1-AAAB-6F4F63EBE711}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Framework", "src\Aggrex.Framework\Aggrex.Framework.csproj", "{ADB98D2E-F041-44E1-AAAB-6F4F63EBE711}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.Logging", "src\Aggrex.Logging\Aggrex.Logging.csproj", "{68B385CD-E109-4520-8C6C-CA320B7C3801}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{ADB98D2E-F041-44E1-AAAB-6F4F63EBE711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADB98D2E-F041-44E1-AAAB-6F4F63EBE711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADB98D2E-F041-44E1-AAAB-6F4F63EBE711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68B385CD-E109-4520-8C6C-CA320B7C3801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68B385CD-E109-4520-8C6C-CA320B7C3801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68B385CD-E109-4520-8C6C-CA320B7C3801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68B385CD-E109-4520-8C6C-CA320B7C3801}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,6 +11,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol.csproj" />
     <ProjectReference Include="..\Aggrex.Database.LiteDB\Aggrex.Database.LiteDB.csproj" />
+    <ProjectReference Include="..\Aggrex.Framework\Aggrex.Framework.csproj" />
+    <ProjectReference Include="..\Aggrex.Logging\Aggrex.Logging.csproj" />
     <ProjectReference Include="..\Aggrex.Network\Aggrex.Network.csproj" />
   </ItemGroup>
 

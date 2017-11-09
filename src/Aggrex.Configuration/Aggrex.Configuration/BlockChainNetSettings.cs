@@ -6,5 +6,6 @@ namespace Aggrex.Configuration
     {
         public string Net { get; set; }
         public int? ListenPortOverride { get; set; }
+        public string[] SeedPeers { get; set; }
     }
 }

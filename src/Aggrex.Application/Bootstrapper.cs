@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Aggrex.Configuration.Modules;
 using Aggrex.ConsensusProtocol.Ioc.Modules;
 using Aggrex.Database.LiteDB.Modules;
+using Aggrex.Logging.Modules;
 using Aggrex.Network;
 using Aggrex.Network.Modules;
 using Autofac;
@@ -30,6 +32,7 @@ namespace Aggrex.Application
             builder.RegisterModule<ConsensusProtocolModule>();
             builder.RegisterModule<NetworkModule>();
             builder.RegisterModule<LiteDBModule>();
+            builder.RegisterModule<LoggingModule>();
 
             _container = builder.Build();
         }
@@ -38,6 +41,9 @@ namespace Aggrex.Application
         {
             using (var scope = _container.BeginLifetimeScope())
             {
+                var idGenerator = scope.Resolve<IDeterministicNetworkIdGenerator>();
+                Console.WriteLine($"Id: {idGenerator.GenerateNetworkId}");
+
                 var node = scope.Resolve<ILocalNode>();
                 node.Start();
             }

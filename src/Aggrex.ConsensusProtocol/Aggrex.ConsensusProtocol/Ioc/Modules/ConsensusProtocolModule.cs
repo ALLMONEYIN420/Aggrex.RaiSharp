@@ -1,7 +1,4 @@
-﻿using Aggrex.ConsensusProtocol.HandShakes;
-using Aggrex.ConsensusProtocol.MessageProcessors.ActiveNodeSet;
-using Aggrex.ConsensusProtocol.MessageProcessors.Addresses;
-using Aggrex.ConsensusProtocol.Messages;
+﻿using Aggrex.ConsensusProtocol.Messages;
 using Aggrex.ConsensusProtocol.TransactionProcessors;
 using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
@@ -27,25 +24,9 @@ namespace Aggrex.ConsensusProtocol.Ioc.Modules
                 .As<IMessageDispatcher>()
                 .SingleInstance();
 
-            builder.RegisterType<HandShakeProcessor>()
-                .As<IHandShakeProcessor>()
-                .SingleInstance();
-
             builder.RegisterType<ActiveNodeSet>()
                 .As<IActiveNodeSet>()
                 .SingleInstance();
-
-            builder.RegisterType<ActiveNodeSetPayloadMessageProcessor>()
-                .SingleInstance().Keyed<IMessageProcessor>(MessageType.ActiveNodeSetPayload);
-
-            builder.RegisterType<RequestActiveNodeSetMessageProcessor>()
-                .SingleInstance().Keyed<IMessageProcessor>(MessageType.RequestActiveNodeSet);
-
-            builder.RegisterType<PeerAddressesPayloadMessageProcessor>()
-                .SingleInstance().Keyed<IMessageProcessor>(MessageType.PeerAddressesPayload);
-
-            builder.RegisterType<RequestPeerAddressMessageProcessor>()
-                .SingleInstance().Keyed<IMessageProcessor>(MessageType.RequestPeerAddresses);
 
             builder.RegisterType<TransferTransactionProcessor>()
                 .SingleInstance().Keyed<ITransactionProcessor>(TransactionType.TransferTransaction);

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Aggrex.ConsensusProtocol.Messages.Addresses;
 using Aggrex.ConsensusProtocol.TransactionProcessors;
 using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
 using Aggrex.Network;
@@ -28,16 +27,8 @@ namespace Aggrex.ConsensusProtocol.Messages
         {
             switch (messageType)
             {
-                case MessageType.RequestPeerAddresses:
-                    _messageProcessors[MessageType.RequestPeerAddresses].ProcessMessage(reader, remoteNode);
-                    break;
-
-                case MessageType.PeerAddressesPayload:
-                    _messageProcessors[MessageType.PeerAddressesPayload].ProcessMessage(reader, remoteNode);
-                    break;
-
-                case MessageType.Transaction:
-                    _transactionDispatcher.DispatchTransaction(reader, remoteNode);
+                case MessageType.Keepalive:
+                    _messageProcessors[MessageType.Keepalive].ProcessMessage(reader, remoteNode);
                     break;
             }
         }

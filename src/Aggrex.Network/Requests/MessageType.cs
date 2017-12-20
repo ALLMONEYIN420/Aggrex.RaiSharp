@@ -2,18 +2,14 @@
 {
     public enum MessageType
     {
-        None = 0x00,
-        Introduction = 0x01,
-
-        RequestPeerAddresses = 0x02,
-        PeerAddressesPayload = 0x03,
-
-        RequestActiveNodeSet = 0x04,
-        ActiveNodeSetPayload = 0x05,
-
-
-
-        Operation = 0x50,
-        Transaction = 0x51
+        Invalid = 0x0,
+        NotAType = 0x1,
+        Keepalive = 0x2,
+        Publish = 0x3,
+        ConfirmReq = 0x4,
+        ConfirmAck = 0x5,
+        BulkPull = 0x6,
+        BulkPush = 0x7,
+        FrontierRe = 0x8,
     }
 }

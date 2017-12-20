@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using Aggrex.Common;
 using Aggrex.Configuration;
 using Aggrex.ConsensusProtocol.Messages;
-using Aggrex.ConsensusProtocol.Messages.ActiveNodeSet;
-using Aggrex.ConsensusProtocol.Messages.Addresses;
-using Aggrex.ConsensusProtocol.Messages.Transaction;
+using Aggrex.ConsensusProtocol.Messages.KeepAlive;
 using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.Framework;
 using Aggrex.Network;
@@ -74,40 +72,35 @@ namespace Aggrex.ConsensusProtocol
                 }
             });
 
-            Task.Run(() => RequestMorePeersLoop());
+            Task.Run(() => KeepAliveLoop());
         }
 
 
-        private void RequestMorePeersLoop()
+        private void KeepAliveLoop()
         {
-            //while (true)
-            //{
-            //    if (_peerTracker.NeedsMoreConnectedPeers)
-            //    {
-            //        foreach (var remoteNode in _peerTracker.GetConnectedPeers())
-            //        {
-            //            if (!remoteNode.QueueContainsMessageType<RequestPeerAddressesMessage>())
-            //            {
-            //                remoteNode.QueueMessage(new RequestPeerAddressesMessage());
-            //            }
+            while (true)
+            {
+                if (_peerTracker.NeedsMoreConnectedPeers)
+                {
+                    foreach (var remoteNode in _peerTracker.GetConnectedPeers())
+                    {
+                        if (!remoteNode.QueueContainsMessageType<KeepAliveMessage>())
+                        {
+                            remoteNode.QueueMessage(new KeepAliveMessage());
+                        }
+                    }
 
-            //            if (!remoteNode.QueueContainsMessageType<RequestActiveNodeSetMessage>())
-            //            {
-            //                remoteNode.QueueMessage(new RequestActiveNodeSetMessage());
-            //            }
-            //        }
+                    foreach (var endpoint in _peerTracker.GetNotConnectedEndPoints(Int32.MaxValue, 0))
+                    {
+                        Task.Run(() => ConnectToPeer(endpoint));
+                    }
 
-            //        foreach (var endpoint in _peerTracker.GetNotConnectedEndPoints(Int32.MaxValue, 0))
-            //        {
-            //            Task.Run(() => ConnectToPeer(endpoint));
-            //        }
-
-            //        for (int i = 0; i < 50; i++)
-            //        {
-            //            Thread.Sleep(100);
-            //        }
-            //    }
-            //}
+                    for (int i = 0; i < 50; i++)
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
+            }
         }
 
         private void ConnectToPeer(IPEndPoint endpoint)

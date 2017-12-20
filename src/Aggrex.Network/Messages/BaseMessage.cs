@@ -6,18 +6,19 @@ namespace Aggrex.Network.Messages
 {
     public abstract class BaseMessage : IStreamable
     {
-        public abstract MessageType MessageType { get; }
+        public MessageHeader MessageHeader { get; set; }
         protected abstract void WriteProperties(BinaryWriter writer);
         protected abstract void ReadProperties(BinaryReader reader);
 
         public void WriteToStream(BinaryWriter writer)
         {
-            writer.Write((byte)MessageType);
+            MessageHeader.WriteToStream(writer);
             WriteProperties(writer);
         }
 
         public void ReadFromStream(BinaryReader reader)
         {
+            MessageHeader.ReadFromStream(reader);
             ReadProperties(reader);
         }
     }

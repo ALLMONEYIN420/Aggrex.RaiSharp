@@ -47,7 +47,7 @@ namespace Aggrex.Network
 
         private string GetClientPort()
         {
-            int port = _clientSettings.BlockChainNetSettings?.ListenPortOverride ?? _clientSettings.ListenPort;
+            int port =  _clientSettings.ListenPort;
             return port.ToString();
         }
 

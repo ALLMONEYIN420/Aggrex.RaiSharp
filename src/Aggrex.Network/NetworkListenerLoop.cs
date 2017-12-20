@@ -18,7 +18,7 @@ namespace Aggrex.Network
         public bool IsBroadCasting { get; set; }
         public NetworkListenerLoop(ClientSettings clientSettings)
         {
-            int port = clientSettings.BlockChainNetSettings.ListenPortOverride ?? clientSettings.ListenPort;
+            int port = clientSettings.ListenPort;
             _listener = new TcpListener(IPAddress.Any, port);
         }
 

@@ -76,7 +76,7 @@ namespace Aggrex.Network
         public bool TryAddNewConnectedPeer(IRemoteNode peer)
         {
             if (Equals(peer.ListenerEndpoint.Address, LocalNode.LocalAddress.Address)
-                && peer.ListenerEndpoint.Port == (_clientSettings.BlockChainNetSettings?.ListenPortOverride ??_clientSettings.ListenPort))
+                && peer.ListenerEndpoint.Port == _clientSettings.ListenPort)
             {
                 return false;
             }
@@ -107,7 +107,7 @@ namespace Aggrex.Network
         public bool TryAddNotConnectedIpEndPoint(IPEndPoint listenerEndPoint)
         {
             if (Equals(listenerEndPoint.Address, LocalNode.LocalAddress.Address)
-                && listenerEndPoint.Port == (_clientSettings.BlockChainNetSettings?.ListenPortOverride ?? _clientSettings.ListenPort))
+                && listenerEndPoint.Port == _clientSettings.ListenPort)
             {
                 return false;
             }

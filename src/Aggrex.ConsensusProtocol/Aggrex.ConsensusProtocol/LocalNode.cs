@@ -13,6 +13,7 @@ using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.Framework;
 using Aggrex.Network;
 using Autofac;
+using Microsoft.Extensions.Logging;
 
 namespace Aggrex.ConsensusProtocol
 {
@@ -24,6 +25,7 @@ namespace Aggrex.ConsensusProtocol
         private readonly INetworkListenerLoop _networkListenerLoop;
         private readonly IUPnPPortForwarder _uPnPPortForwarder;
         private readonly IPeerTracker _peerTracker;
+        private readonly ILogger<LocalNode> _logger;
         private readonly ClientSettings _clientSettings;
         private readonly IPEndPoint _seedNodeEndPoint;
         private RemoteNode.Factory _remoteNodeFactory { get; set; }
@@ -34,8 +36,11 @@ namespace Aggrex.ConsensusProtocol
             ILocalIpAddressDiscoverer localIpAddressDiscoverer,
             RemoteNode.Factory remoteNodeFactory,
             IPeerTracker peerTracker,
+            ILoggerFactory loggerFactory,
             ClientSettings clientSettings)
         {
+            _logger = loggerFactory.CreateLogger<LocalNode>();
+
             _uPnPPortForwarder = portForwarder;
             _peerTracker = peerTracker;
 
@@ -45,15 +50,10 @@ namespace Aggrex.ConsensusProtocol
             _clientSettings = clientSettings;
             _remoteNodeFactory = remoteNodeFactory;
 
-            if (_clientSettings.BlockChainNetSettings.Net == "LocalNet")
-            {
-                _seedNodeEndPoint = new IPEndPoint(IPAddress.Parse(localIpAddressDiscoverer.GetLocalIpAddress()), _clientSettings.ListenPort);
-            }
-
-            int port = _clientSettings.BlockChainNetSettings?.ListenPortOverride ?? _clientSettings.ListenPort;
+            int port = _clientSettings.ListenPort;
             LocalAddress = new IPEndPoint(IPAddress.Parse(localIpAddressDiscoverer.GetLocalIpAddress()), port);
 
-            Console.WriteLine($"Started Listening on {LocalAddress.Address}:{LocalAddress.Port}");
+            _logger.LogInformation($"Started Listening on {LocalAddress.Address}:{LocalAddress.Port}");
             Console.WriteLine();
         }
 

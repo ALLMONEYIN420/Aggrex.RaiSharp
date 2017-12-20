@@ -42,10 +42,8 @@ namespace Aggrex.Application
         {
             using (var scope = _container.BeginLifetimeScope())
             {
-                var idGenerator = scope.Resolve<IDeterministicNetworkIdGenerator>();
-
                 var logger = scope.Resolve<ILoggerFactory>().CreateLogger<Bootstrapper>();
-                logger.LogInformation($"Id: {idGenerator.GenerateNetworkId}");
+                logger.LogInformation($"Starting RaiNode...");
 
                 var node = scope.Resolve<ILocalNode>();
                 node.Start();

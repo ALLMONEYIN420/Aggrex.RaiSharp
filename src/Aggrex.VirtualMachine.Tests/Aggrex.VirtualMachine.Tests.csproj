@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Aggrex.Common\Aggrex.Common.csproj" />
-    <ProjectReference Include="..\Aggrex.VirtualMachine\Aggrex.VirtualMachine\Aggrex.VirtualMachine.csproj" />
   </ItemGroup>
 
 </Project>

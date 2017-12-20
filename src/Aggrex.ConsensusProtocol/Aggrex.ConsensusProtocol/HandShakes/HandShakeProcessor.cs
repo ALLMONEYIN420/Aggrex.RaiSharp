@@ -32,7 +32,7 @@ namespace Aggrex.ConsensusProtocol.HandShakes
             IntroductionMessage messageToSend = new IntroductionMessage();
             messageToSend.BlockHeight = 100;
             messageToSend.Version = new Version(_clientSettings.Version);
-            messageToSend.Port = _clientSettings.BlockChainNetSettings.ListenPortOverride ?? _clientSettings.ListenPort;
+            messageToSend.Port = _clientSettings.ListenPort;
             messageToSend.DNID = _deterministicNetworkIdGenerator.GenerateNetworkId;
 
             remoteNode.QueueMessage(messageToSend);

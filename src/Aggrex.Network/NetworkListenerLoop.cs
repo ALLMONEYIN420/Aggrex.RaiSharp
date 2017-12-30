@@ -13,25 +13,43 @@ namespace Aggrex.Network
 {
     public class NetworkListenerLoop : INetworkListenerLoop
     {
-        private readonly TcpListener _listener;
+        private readonly TcpListener _tcpListener;
+        private readonly UdpClient _udpListener;
+        private readonly int _port;
 
         public bool IsBroadCasting { get; set; }
         public NetworkListenerLoop(ClientSettings clientSettings)
         {
-            int port = clientSettings.ListenPort;
-            _listener = new TcpListener(IPAddress.Any, port);
+            _port = clientSettings.ListenPort;
+            _tcpListener = new TcpListener(IPAddress.Any, _port);
+            _udpListener = new UdpClient();
         }
 
-        public event EventHandler<TcpClient> ConnectionEstablished;
+        public event EventHandler<TcpClient> TcpConnectionEstablished;
 
-        public void StartListeningForConnections()
+        public event EventHandler<byte[]> UdpPacketReceived;
+
+        public void ExecuteTcpListenerLoop()
         {
-            _listener.Start();
+            _tcpListener.Start();
 
             while (true)
             {
-                TcpClient client = _listener.AcceptTcpClient();
-                ConnectionEstablished?.Invoke(this, client);
+                TcpClient client = _tcpListener.AcceptTcpClient();
+                TcpConnectionEstablished?.Invoke(this, client);
+            }
+        }
+
+        public void ExecuteUdpListenerLoop()
+        {
+            var endPoint = new IPEndPoint(IPAddress.Any, _port);
+            _udpListener.Client.Bind(endPoint);
+            IPEndPoint senderDetails = null;
+            while (true)
+            {
+                var data = _udpListener.Receive(ref senderDetails);
+                _udpListener.Receive(ref endPoint);
+                UdpPacketReceived?.Invoke(this, data);
             }
         }
     }

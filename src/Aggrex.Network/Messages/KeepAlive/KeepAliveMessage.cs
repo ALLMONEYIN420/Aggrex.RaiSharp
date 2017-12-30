@@ -2,10 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Net;
-using Aggrex.Network.Messages;
-using Aggrex.Network.Requests;
 
-namespace Aggrex.ConsensusProtocol.Messages.KeepAlive
+namespace Aggrex.Network.Messages.KeepAlive
 {
     public class KeepAliveMessage : BaseMessage
     {

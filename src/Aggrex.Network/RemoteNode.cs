@@ -10,8 +10,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Aggrex.Common;
+using Aggrex.Configuration;
 using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
+using Aggrex.Network.Messages.KeepAlive;
 using Aggrex.Network.Requests;
 using Autofac;
 
@@ -22,41 +24,40 @@ namespace Aggrex.Network
         public delegate RemoteNode Factory(TcpClient client);
 
         private readonly IMessageDispatcher _messageDispatcher;
-        private readonly IHandShakeProcessor _handShakeProcessor;
 
         private readonly TcpClient _client;
         private readonly BlockingCollection<BaseMessage> _requestQueue;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private bool _isConncected;
+        private ClientSettings _clientSettings;
 
-        public RemoteNode(TcpClient client, IHandShakeProcessor handShakeProcessor, IMessageDispatcher messageDispatcher)
+        public RemoteNode(TcpClient client, IMessageDispatcher messageDispatcher, ClientSettings clientSettings)
         {
-            _handShakeProcessor = handShakeProcessor;
-
             _client = client;
             _requestQueue = new BlockingCollection<BaseMessage>();
             _messageDispatcher = messageDispatcher;
             _isConncected = false;
             _cancellationTokenSource = new CancellationTokenSource();
+            _clientSettings = clientSettings;
         }
 
-        public void ExecuteProtocolHandShake()
-        {
-            try
-            {
-                _isConncected = true;
-                var networkStream = _client.GetStream();
-                var binaryReader = new BinaryReader(networkStream);
+        //public void ExecuteProtocolHandShake()
+        //{
+        //    try
+        //    {
+        //        _isConncected = true;
+        //        var networkStream = _client.GetStream();
+        //        var binaryReader = new BinaryReader(networkStream);
 
-                Task.Run(() => ExecuteSendLoop());
+        //        Task.Run(() => ExecuteSendLoop());
 
-                _handShakeProcessor.ProcessHandShake(binaryReader, this);
-            }
-            catch (Exception ex)
-            {
-                OnDisconnected();
-            }
-        }
+        //        _handShakeProcessor.ProcessHandShake(binaryReader, this);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        OnDisconnected();
+        //    }
+        //}
 
         public void QueueMessage(BaseMessage request)
         {
@@ -83,6 +84,13 @@ namespace Aggrex.Network
 
         public void ExecuteProtocolLoop()
         {
+            _isConncected = true;
+
+            Task.Run(() =>
+            {
+                ExecuteSendLoop();
+                var keepAliveMessage = new KeepAliveMessage();
+            });
             _client.ReceiveTimeout = 100000;
 
             using (var networkStream = _client.GetStream())
@@ -93,8 +101,9 @@ namespace Aggrex.Network
                 {
                     try
                     {
-                        MessageType requestType = (MessageType) binaryReader.ReadByte();
-                        _messageDispatcher.DispatchProtocolMessage(requestType, binaryReader, this);
+                        MessageHeader header = new MessageHeader();
+                        header.ReadFromStream(binaryReader);
+                        _messageDispatcher.DispatchProtocolMessage(header.Type, binaryReader, this);
                     }
                     catch (Exception ex)
                     {

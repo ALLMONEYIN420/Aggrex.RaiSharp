@@ -16,8 +16,6 @@ namespace Aggrex.Network
 
         void ExecuteProtocolLoop();
 
-        void ExecuteProtocolHandShake();
-
         void QueueMessage(BaseMessage message);
 
         string DNID { get; set; }

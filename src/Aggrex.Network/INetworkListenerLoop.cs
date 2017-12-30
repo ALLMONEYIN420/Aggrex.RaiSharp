@@ -9,7 +9,10 @@ namespace Aggrex.Network
     /// </summary>
     public interface INetworkListenerLoop
     {
-        event EventHandler<TcpClient> ConnectionEstablished;
-        void StartListeningForConnections();
+        event EventHandler<TcpClient> TcpConnectionEstablished;
+
+        event EventHandler<byte[]> UdpPacketReceived;
+        void ExecuteTcpListenerLoop();
+        void ExecuteUdpListenerLoop();
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Aggrex.Common;
 using Aggrex.Configuration;
 using Aggrex.ConsensusProtocol.Messages;
-using Aggrex.ConsensusProtocol.Messages.KeepAlive;
 using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.Framework;
 using Aggrex.Network;
+using Aggrex.Network.Messages.KeepAlive;
 using Autofac;
 using Microsoft.Extensions.Logging;
 
@@ -42,7 +42,8 @@ namespace Aggrex.ConsensusProtocol
             _peerTracker = peerTracker;
 
             _networkListenerLoop = networkListenerLoop;
-            _networkListenerLoop.ConnectionEstablished += HandleConnectionEstablished;
+            _networkListenerLoop.TcpConnectionEstablished += HandleConnectionEstablished;
+            _networkListenerLoop.UdpPacketReceived += HandleUdpPacketReceived;
 
             _clientSettings = clientSettings;
             _remoteNodeFactory = remoteNodeFactory;
@@ -53,6 +54,10 @@ namespace Aggrex.ConsensusProtocol
             _logger.LogInformation($"Started Listening on {LocalAddress.Address}:{LocalAddress.Port}");
         }
 
+        private void HandleUdpPacketReceived(object sender, byte[] data)
+        {
+        }
+
         public IPEndPoint LocalAddress { get; private set; }
 
         public void Start()
@@ -60,7 +65,8 @@ namespace Aggrex.ConsensusProtocol
             Task.Run(async () =>
             {
                 await _uPnPPortForwarder.ForwardPortIfNatFound();
-                _networkListenerLoop.StartListeningForConnections();
+                Task.Run(() => _networkListenerLoop.ExecuteTcpListenerLoop());
+                Task.Run(() => _networkListenerLoop.ExecuteUdpListenerLoop());
             });
 
             Task.Run(() =>
@@ -71,6 +77,7 @@ namespace Aggrex.ConsensusProtocol
                     ConnectToPeer(new IPEndPoint(addresslist[0], _clientSettings.BlockChainNetSettings.Port));
                 }
             });
+
 
             Task.Run(() => KeepAliveLoop());
         }
@@ -117,7 +124,7 @@ namespace Aggrex.ConsensusProtocol
         private void OnNodeConnectionEstablished(TcpClient client)
         {
             IRemoteNode newNode = _remoteNodeFactory.Invoke(client);
-            newNode.ExecuteProtocolHandShake();
+            newNode.ExecuteProtocolLoop();
         }
 
         private void HandleConnectionEstablished(object sender, TcpClient client)

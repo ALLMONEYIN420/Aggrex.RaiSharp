@@ -8,6 +8,6 @@ namespace Aggrex.Common
     public interface IStreamable
     {
         void WriteToStream(BinaryWriter writer);
-        void ReadFromStream(BinaryReader reader);
+        bool ReadFromStream(BinaryReader reader);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Aggrex.ConsensusProtocol.TransactionProcessors;
+using System.Net;
 using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
 using Aggrex.Network;
 using Aggrex.Network.Messages;
@@ -23,12 +23,22 @@ namespace Aggrex.ConsensusProtocol.Messages
             _messageProcessors = messageProcessors;
         }
 
-        public void DispatchProtocolMessage(MessageType messageType, BinaryReader reader, IRemoteNode remoteNode)
+        public void DispatchTcpProtocolMessage(MessageType messageType, BinaryReader reader, IRemoteNode remoteNode)
         {
             switch (messageType)
             {
                 case MessageType.Keepalive:
-                    _messageProcessors[MessageType.Keepalive].ProcessMessage(reader, remoteNode);
+                    _messageProcessors[MessageType.Keepalive].ProcessTcpMessage(reader, remoteNode);
+                    break;
+            }
+        }
+
+        public void DispatchDatagramMessage(MessageType messageType, byte[] data, IPEndPoint sender)
+        {
+            switch (messageType)
+            {
+                case MessageType.Keepalive:
+                    _messageProcessors[MessageType.Keepalive].ProcessUdpMessage(data, sender);
                     break;
             }
         }

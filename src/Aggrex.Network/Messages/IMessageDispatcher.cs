@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using Aggrex.Network.Messages.MessageProcessor;
 using Aggrex.Network.Requests;
 
@@ -10,6 +11,7 @@ namespace Aggrex.Network.Messages
     /// </summary>
     public interface IMessageDispatcher
     {
-        void DispatchProtocolMessage(MessageType messageType, BinaryReader reader, IRemoteNode remoteNode);
+        void DispatchTcpProtocolMessage(MessageType messageType, BinaryReader reader, IRemoteNode remoteNode);
+        void DispatchDatagramMessage(MessageType messageType, byte[] data, IPEndPoint sender);
     }
 }

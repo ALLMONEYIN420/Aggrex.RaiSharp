@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 
 namespace Aggrex.Network.Messages.MessageProcessor
 {
@@ -8,6 +9,7 @@ namespace Aggrex.Network.Messages.MessageProcessor
     /// </summary>
     public interface IMessageProcessor
     {
-        void ProcessMessage(BinaryReader reader, IRemoteNode remoteNode);
+        void ProcessTcpMessage(BinaryReader reader, IRemoteNode remoteNode);
+        void ProcessUdpMessage(byte[] data, IPEndPoint sender);
     }
 }

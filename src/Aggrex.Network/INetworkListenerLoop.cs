@@ -11,8 +11,16 @@ namespace Aggrex.Network
     {
         event EventHandler<TcpClient> TcpConnectionEstablished;
 
-        event EventHandler<byte[]> UdpPacketReceived;
+        event EventHandler<DataGramReceivedArgs> DatagramReceived;
+
         void ExecuteTcpListenerLoop();
         void ExecuteUdpListenerLoop();
+    }
+
+
+    public struct DataGramReceivedArgs
+    {
+        public byte[] Data { get; set; }
+        public IPEndPoint Sender { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace Aggrex.Network
 
         public event EventHandler<TcpClient> TcpConnectionEstablished;
 
-        public event EventHandler<byte[]> UdpPacketReceived;
+        public event EventHandler<DataGramReceivedArgs> DatagramReceived;
 
         public void ExecuteTcpListenerLoop()
         {
@@ -49,7 +49,11 @@ namespace Aggrex.Network
             {
                 var data = _udpListener.Receive(ref senderDetails);
                 _udpListener.Receive(ref endPoint);
-                UdpPacketReceived?.Invoke(this, data);
+                DatagramReceived?.Invoke(this, new DataGramReceivedArgs
+                {
+                    Data = data,
+                    Sender = senderDetails,
+                });
             }
         }
     }

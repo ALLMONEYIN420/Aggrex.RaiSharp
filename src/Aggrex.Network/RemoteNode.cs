@@ -89,7 +89,6 @@ namespace Aggrex.Network
             Task.Run(() =>
             {
                 ExecuteSendLoop();
-                var keepAliveMessage = new KeepAliveMessage();
             });
             _client.ReceiveTimeout = 100000;
 
@@ -103,7 +102,7 @@ namespace Aggrex.Network
                     {
                         MessageHeader header = new MessageHeader();
                         header.ReadFromStream(binaryReader);
-                        _messageDispatcher.DispatchProtocolMessage(header.Type, binaryReader, this);
+                        _messageDispatcher.DispatchTcpProtocolMessage(header.Type, binaryReader, this);
                     }
                     catch (Exception ex)
                     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -9,6 +10,7 @@ using Aggrex.ConsensusProtocol.Messages;
 using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.Framework;
 using Aggrex.Network;
+using Aggrex.Network.Messages;
 using Aggrex.Network.Messages.KeepAlive;
 using Autofac;
 using Microsoft.Extensions.Logging;
@@ -23,6 +25,7 @@ namespace Aggrex.ConsensusProtocol
         private readonly INetworkListenerLoop _networkListenerLoop;
         private readonly IUPnPPortForwarder _uPnPPortForwarder;
         private readonly IPeerTracker _peerTracker;
+        private readonly IMessageDispatcher _messageDispatcher;
         private readonly ILogger<LocalNode> _logger;
         private readonly ClientSettings _clientSettings;
         private RemoteNode.Factory _remoteNodeFactory { get; set; }
@@ -34,6 +37,7 @@ namespace Aggrex.ConsensusProtocol
             RemoteNode.Factory remoteNodeFactory,
             IPeerTracker peerTracker,
             ILoggerFactory loggerFactory,
+            IMessageDispatcher messageDispatcher,
             ClientSettings clientSettings)
         {
             _logger = loggerFactory.CreateLogger<LocalNode>();
@@ -43,7 +47,9 @@ namespace Aggrex.ConsensusProtocol
 
             _networkListenerLoop = networkListenerLoop;
             _networkListenerLoop.TcpConnectionEstablished += HandleConnectionEstablished;
-            _networkListenerLoop.UdpPacketReceived += HandleUdpPacketReceived;
+            _networkListenerLoop.DatagramReceived += HandleDatagramReceived;
+
+            _messageDispatcher = messageDispatcher;
 
             _clientSettings = clientSettings;
             _remoteNodeFactory = remoteNodeFactory;
@@ -54,8 +60,13 @@ namespace Aggrex.ConsensusProtocol
             _logger.LogInformation($"Started Listening on {LocalAddress.Address}:{LocalAddress.Port}");
         }
 
-        private void HandleUdpPacketReceived(object sender, byte[] data)
+        private void HandleDatagramReceived(object sender, DataGramReceivedArgs args)
         {
+            var messageHeader = new MessageHeader();
+            if(messageHeader.ReadFromStream(new BinaryReader(new MemoryStream(args.Data)))
+            {
+                
+            }
         }
 
         public IPEndPoint LocalAddress { get; private set; }

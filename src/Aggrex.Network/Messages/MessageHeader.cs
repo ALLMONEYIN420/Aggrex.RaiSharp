@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using Aggrex.Common;
 using Aggrex.Network.Requests;
 
@@ -6,12 +7,13 @@ namespace Aggrex.Network.Messages
 {
     public class MessageHeader : IStreamable
     {
-        public static byte[] MagicNumber { get; } = new[] {(byte)'R', (byte)'C' };
+        public static byte[] MagicNumber { get; } = new[] { (byte)'R', (byte)'C' };
         public sbyte VersionMax { get; set; }
         public sbyte VersionMin { get; set; }
         public sbyte VersionUsing { get; set; }
         public MessageType Type { get; set; }
         public byte[] Extensions { get; set; }
+
         public void WriteToStream(BinaryWriter writer)
         {
             writer.Write(MagicNumber);
@@ -22,14 +24,28 @@ namespace Aggrex.Network.Messages
             writer.Write(Extensions);
         }
 
-        public void ReadFromStream(BinaryReader reader)
+        public bool ReadFromStream(BinaryReader reader)
         {
-            reader.ReadBytes(MagicNumber.Length);
-            VersionMax = (sbyte)reader.ReadByte();
-            VersionUsing = (sbyte)reader.ReadByte();
-            VersionMin = (sbyte)reader.ReadByte();
-            Type = (MessageType)reader.ReadByte();
-            Extensions = reader.ReadBytes(2);
+            try
+            {
+                var magicNumber = reader.ReadBytes(MagicNumber.Length);
+                if (!Enumerable.SequenceEqual(magicNumber, MagicNumber))
+                {
+                    return false;
+                }
+
+                VersionMax = (sbyte) reader.ReadByte();
+                VersionUsing = (sbyte) reader.ReadByte();
+                VersionMin = (sbyte) reader.ReadByte();
+                Type = (MessageType) reader.ReadByte();
+                Extensions = reader.ReadBytes(2);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

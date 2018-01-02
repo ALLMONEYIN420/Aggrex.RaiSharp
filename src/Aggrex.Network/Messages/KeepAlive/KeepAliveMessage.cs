@@ -37,7 +37,7 @@ namespace Aggrex.Network.Messages.KeepAlive
                     var port = reader.ReadUInt16();
                     if (bytesRead.Any(b => b != 0))
                     {
-                        var ipAddres = IPAddress.Parse(BitConverter.ToString(bytesRead).Replace("-", ""));
+                        var ipAddres = new IPAddress(bytesRead).MapToIPv4(); 
                         Peers[i] = new IPEndPoint(ipAddres, port);
                     }
                 }

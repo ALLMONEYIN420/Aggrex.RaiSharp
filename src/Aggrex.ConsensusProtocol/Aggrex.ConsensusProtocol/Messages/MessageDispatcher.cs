@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using System.Net;
-using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
 using Aggrex.Network;
 using Aggrex.Network.Messages;
-using Aggrex.Network.Messages.MessageProcessor;
 using Aggrex.Network.ObjectReader;
 using Aggrex.Network.Requests;
 using Autofac;
@@ -13,32 +11,19 @@ namespace Aggrex.ConsensusProtocol.Messages
 {
     public class MessageDispatcher : IMessageDispatcher
     {
-        private readonly ITransactionDispatcher _transactionDispatcher;
         private readonly IIndex<MessageType, IMessageProcessor> _messageProcessors;
 
-        public MessageDispatcher(ITransactionDispatcher transactionDispatcher,
-        IIndex<MessageType, IMessageProcessor> messageProcessors)
+        public MessageDispatcher(IIndex<MessageType, IMessageProcessor> messageProcessors)
         {
-            _transactionDispatcher = transactionDispatcher;
             _messageProcessors = messageProcessors;
         }
 
-        public void DispatchTcpProtocolMessage(MessageType messageType, BinaryReader reader, IRemoteNode remoteNode)
+        public void DispatchDatagramMessage(MessageHeader messageHeader, BinaryReader reader, IPEndPoint sender)
         {
-            switch (messageType)
+            switch (messageHeader.Type)
             {
                 case MessageType.Keepalive:
-                    _messageProcessors[MessageType.Keepalive].ProcessTcpMessage(reader, remoteNode);
-                    break;
-            }
-        }
-
-        public void DispatchDatagramMessage(MessageType messageType, byte[] data, IPEndPoint sender)
-        {
-            switch (messageType)
-            {
-                case MessageType.Keepalive:
-                    _messageProcessors[MessageType.Keepalive].ProcessUdpMessage(data, sender);
+                    _messageProcessors[MessageType.Keepalive].ProcessUdpMessage(messageHeader, reader, sender);
                     break;
             }
         }

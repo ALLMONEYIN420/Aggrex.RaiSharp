@@ -1,12 +1,9 @@
 ﻿using Aggrex.ConsensusProtocol.Messages;
-using Aggrex.ConsensusProtocol.TransactionProcessors;
-using Aggrex.ConsensusProtocol.Transactions;
-using Aggrex.ConsensusProtocol.Transactions.Dispatcher;
 using Aggrex.Framework;
 using Aggrex.Network;
 using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
-using Aggrex.Network.Messages.MessageProcessor;
+using Aggrex.Network.Messages.KeepAlive;
 using Aggrex.Network.Requests;
 using Autofac;
 
@@ -28,12 +25,9 @@ namespace Aggrex.ConsensusProtocol.Ioc.Modules
                 .As<IActiveNodeSet>()
                 .SingleInstance();
 
-            builder.RegisterType<TransferTransactionProcessor>()
-                .SingleInstance().Keyed<ITransactionProcessor>(TransactionType.TransferTransaction);
+            builder.RegisterType<KeepAliveMessageProcessor>()
+                .SingleInstance().Keyed<IMessageProcessor>(MessageType.Keepalive);
 
-            builder.RegisterType<TransactionDispatcher>()
-                .As<ITransactionDispatcher>()
-                .SingleInstance();
         }
     }
 }

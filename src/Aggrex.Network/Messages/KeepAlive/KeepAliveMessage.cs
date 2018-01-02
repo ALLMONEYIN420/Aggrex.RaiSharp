@@ -27,17 +27,26 @@ namespace Aggrex.Network.Messages.KeepAlive
             }
         }
 
-        protected override void ReadProperties(BinaryReader reader)
+        protected override bool ReadProperties(BinaryReader reader)
         {
-            for (int i = 0; i < Peers.Length; i++)
+            try
             {
-                var bytesRead = reader.ReadBytes(16);
-                var port = reader.ReadUInt16();
-                if (bytesRead.Any(b => b != 0))
+                for (int i = 0; i < Peers.Length; i++)
                 {
-                    var ipAddres = IPAddress.Parse(BitConverter.ToString(bytesRead).Replace("-", ""));
-                    Peers[i] = new IPEndPoint(ipAddres, port);
+                    var bytesRead = reader.ReadBytes(16);
+                    var port = reader.ReadUInt16();
+                    if (bytesRead.Any(b => b != 0))
+                    {
+                        var ipAddres = IPAddress.Parse(BitConverter.ToString(bytesRead).Replace("-", ""));
+                        Peers[i] = new IPEndPoint(ipAddres, port);
+                    }
                 }
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

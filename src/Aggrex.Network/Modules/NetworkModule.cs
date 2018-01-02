@@ -1,6 +1,5 @@
 ﻿using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
-using Aggrex.Network.Messages.MessageProcessor;
 using Aggrex.Network.ObjectReader;
 using Autofac;
 

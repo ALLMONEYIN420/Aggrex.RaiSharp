@@ -5,9 +5,16 @@ using Aggrex.Network.Requests;
 
 namespace Aggrex.Network.Messages
 {
+        // 2 bytes rai::write (stream_a, rai::message::magic_number); 
+        // 1 byte rai::write (stream_a, version_max);
+        // 1 byte rai::write (stream_a, version_using);
+        // 1 byte rai::write (stream_a, version_min);
+        // 1 byterai::write (stream_a, type);
+        // 4 bytes long rai::write (stream_a, static_cast <uint16_t> (extensions.to_ullong ()));
     public class MessageHeader : IStreamable
     {
         public static byte[] MagicNumber { get; } = new[] { (byte)'R', (byte)'C' };
+        public static short SizeInBytes { get; } = 8;
         public sbyte VersionMax { get; set; }
         public sbyte VersionMin { get; set; }
         public sbyte VersionUsing { get; set; }

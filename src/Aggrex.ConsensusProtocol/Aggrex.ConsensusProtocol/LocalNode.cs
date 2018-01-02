@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Aggrex.Common;
 using Aggrex.Configuration;
 using Aggrex.ConsensusProtocol.Messages;
-using Aggrex.ConsensusProtocol.Transactions;
 using Aggrex.Framework;
 using Aggrex.Network;
 using Aggrex.Network.Messages;
@@ -63,9 +62,12 @@ namespace Aggrex.ConsensusProtocol
         private void HandleDatagramReceived(object sender, DataGramReceivedArgs args)
         {
             var messageHeader = new MessageHeader();
-            if(messageHeader.ReadFromStream(new BinaryReader(new MemoryStream(args.Data)))
+            using (var reader = new BinaryReader(new MemoryStream(args.Data)))
             {
-                
+                if (messageHeader.ReadFromStream(reader))
+                {
+                    _messageDispatcher.DispatchDatagramMessage(messageHeader, reader , args.Sender);
+                }
             }
         }
 

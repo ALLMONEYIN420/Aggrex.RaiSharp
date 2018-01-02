@@ -102,7 +102,7 @@ namespace Aggrex.Network
                     {
                         MessageHeader header = new MessageHeader();
                         header.ReadFromStream(binaryReader);
-                        _messageDispatcher.DispatchTcpProtocolMessage(header.Type, binaryReader, this);
+                        // TODO Bootstrapper stuff
                     }
                     catch (Exception ex)
                     {

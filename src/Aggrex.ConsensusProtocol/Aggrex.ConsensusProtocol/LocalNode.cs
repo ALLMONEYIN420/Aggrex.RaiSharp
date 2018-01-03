@@ -45,7 +45,7 @@ namespace Aggrex.ConsensusProtocol
             _peerTracker = peerTracker;
 
             _networkListenerLoop = networkListenerLoop;
-            _networkListenerLoop.TcpConnectionEstablished += HandleConnectionEstablished;
+            //_networkListenerLoop.TcpConnectionEstablished += HandleConnectionEstablished;
             _networkListenerLoop.DatagramReceived += HandleDatagramReceived;
 
             _messageDispatcher = messageDispatcher;
@@ -53,7 +53,7 @@ namespace Aggrex.ConsensusProtocol
             _clientSettings = clientSettings;
             _remoteNodeFactory = remoteNodeFactory;
 
-            int port = _clientSettings.ListenPort;
+            int port = _clientSettings.BlockChainNetSettings.TcpPort;
             LocalAddress = new IPEndPoint(IPAddress.Parse(localIpAddressDiscoverer.GetLocalIpAddress()), port);
 
             _logger.LogInformation($"Started Listening on {LocalAddress.Address}:{LocalAddress.Port}");
@@ -82,67 +82,36 @@ namespace Aggrex.ConsensusProtocol
                 Task.Run(() => _networkListenerLoop.ExecuteUdpListenerLoop());
             });
 
-            Task.Run(() =>
-            {
-                foreach (var peer in _clientSettings.BlockChainNetSettings.SeedPeers)
-                {
-                    IPAddress[] addresslist = Dns.GetHostAddresses(peer);
-                    ConnectToPeer(new IPEndPoint(addresslist[0], _clientSettings.BlockChainNetSettings.Port));
-                }
-            });
-
-
-            Task.Run(() => KeepAliveLoop());
+            //Task.Run(() =>
+            //{
+            //    foreach (var peer in _clientSettings.BlockChainNetSettings.SeedPeers)
+            //    {
+            //        IPAddress[] addresslist = Dns.GetHostAddresses(peer);
+            //        ConnectToPeer(new IPEndPoint(addresslist[0], _clientSettings.BlockChainNetSettings.Port));
+            //    }
+            //});
         }
 
+        //private void ConnectToPeer(IPEndPoint endpoint)
+        //{
+        //    TcpClient client = new TcpClient();
+        //    client.Connect(endpoint);
 
-        private void KeepAliveLoop()
-        {
-            while (true)
-            {
-                if (_peerTracker.NeedsMoreConnectedPeers)
-                {
-                    foreach (var remoteNode in _peerTracker.GetConnectedPeers())
-                    {
-                        if (!remoteNode.QueueContainsMessageType<KeepAliveMessage>())
-                        {
-                            remoteNode.QueueMessage(new KeepAliveMessage());
-                        }
-                    }
+        //    if (client.Connected)
+        //    {
+        //        OnNodeConnectionEstablished(client);
+        //    }
+        //}
 
-                    foreach (var endpoint in _peerTracker.GetNotConnectedEndPoints(Int32.MaxValue, 0))
-                    {
-                        Task.Run(() => ConnectToPeer(endpoint));
-                    }
+        //private void OnNodeConnectionEstablished(TcpClient client)
+        //{
+        //    IRemoteNode newNode = _remoteNodeFactory.Invoke(client);
+        //    newNode.ExecuteProtocolLoop();
+        //}
 
-                    for (int i = 0; i < 50; i++)
-                    {
-                        Thread.Sleep(100);
-                    }
-                }
-            }
-        }
-
-        private void ConnectToPeer(IPEndPoint endpoint)
-        {
-            TcpClient client = new TcpClient();
-            client.Connect(endpoint);
-
-            if (client.Connected)
-            {
-                OnNodeConnectionEstablished(client);
-            }
-        }
-
-        private void OnNodeConnectionEstablished(TcpClient client)
-        {
-            IRemoteNode newNode = _remoteNodeFactory.Invoke(client);
-            newNode.ExecuteProtocolLoop();
-        }
-
-        private void HandleConnectionEstablished(object sender, TcpClient client)
-        {
-            OnNodeConnectionEstablished(client);
-        }
+        //private void HandleConnectionEstablished(object sender, TcpClient client)
+        //{
+        //    OnNodeConnectionEstablished(client);
+        //}
     }
 }

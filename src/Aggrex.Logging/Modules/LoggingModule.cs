@@ -8,8 +8,7 @@ namespace Aggrex.Logging.Modules
         protected override void Load(ContainerBuilder builder)
         {
             var loggerFactory = new LoggerFactory();
-            loggerFactory.AddConsole();
-            loggerFactory.AddDebug();
+            loggerFactory.AddConsole(LogLevel.Debug);
 
             builder.RegisterInstance<LoggerFactory>(loggerFactory)
                 .As<ILoggerFactory>()

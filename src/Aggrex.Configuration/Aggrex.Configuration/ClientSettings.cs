@@ -7,7 +7,6 @@ namespace Aggrex.Configuration
         public byte VersionUsing { get; set; }
         public short Extensions { get; set; }
         public string NodeType { get; set; }
-        public int ListenPort { get; set; }
         public BlockChainNetSettings BlockChainNetSettings { get; set; }
     }
 }

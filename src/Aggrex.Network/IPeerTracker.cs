@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 
 namespace Aggrex.Network
 {
@@ -9,13 +10,9 @@ namespace Aggrex.Network
     /// </summary>
     public interface IPeerTracker
     {
-        bool TryAddNewConnectedPeer(IRemoteNode remoteNode);
-        bool TryAddNotConnectedIpEndPoint(IPEndPoint listenerEndPoint);
-        IRemoteNode RemovePeer(IRemoteNode peer);
-        bool NeedsMoreUnConnectedPeers { get; }
-        bool NeedsMoreConnectedPeers { get; }
-        IRemoteNode[] GetConnectedPeers();
-        IPEndPoint[] GetNotConnectedEndPoints(int max, int skip);
-        IPEndPoint[] GetConnectedEndPoints(int max, int skip);
+        bool TryAddPeer(IPEndPoint peer);
+        bool TryRemovePeer(IPEndPoint peer, out IRemoteNode remoteNode);
+        bool NeedsMoreTrackedPeers { get; }
+        IEnumerable<KeyValuePair<string, IRemoteNode>> GetTrackedPeers();
     }
 }

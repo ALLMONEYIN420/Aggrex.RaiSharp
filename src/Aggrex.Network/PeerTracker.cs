@@ -3,147 +3,73 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
 using Aggrex.Common;
 using Aggrex.Configuration;
 using Aggrex.Framework;
 using Autofac;
+using Microsoft.Extensions.Logging;
 
 namespace Aggrex.Network
 {
     internal class PeerTracker : IPeerTracker
     {
-        private readonly ConcurrentDictionary<string, IRemoteNode> _connectedPeers;
-
-        private readonly HashSet<IPEndPoint> _notConnectedPeers;
-
-        private readonly ClientSettings _clientSettings;
-
-        private readonly IActiveNodeSet _activeNodeSet;
+        private readonly ConcurrentDictionary<string, IRemoteNode> _trackedPeers;
 
         private readonly int MAX_CONNECTED_PEER_COUNT = 10;
 
         private readonly int MAX_NOT_CONNECTED_PEER_COUNT = 25;
 
-        public bool NeedsMoreUnConnectedPeers
-        {
-            get
-            {
-                return _notConnectedPeers.Count < MAX_NOT_CONNECTED_PEER_COUNT;
-            }
-        }
+        private RemoteNode.Factory _remoteNodeFactory;
 
-        public bool NeedsMoreConnectedPeers
-        {
-            get
-            {
-                return _notConnectedPeers.Count < MAX_CONNECTED_PEER_COUNT;
-            }
-        }
+        private ILogger<PeerTracker> _logger;
+        private ClientSettings _clientSettings;
+        private IPEndPoint _localIpEndpoint;
 
-        public IRemoteNode[] GetConnectedPeers()
-        {
-            lock (_connectedPeers)
-            {
-                return _connectedPeers.Values.ToArray();
-            }
-        }
-
-        public IPEndPoint[] GetNotConnectedEndPoints(int max, int skip)
-        {
-            return _notConnectedPeers.ToArray();
-        }
-
-        public IPEndPoint[] GetConnectedEndPoints(int max, int skip)
-        {
-            lock (_connectedPeers)
-            {
-                return _connectedPeers.Select(x => x.Value.ListenerEndpoint).ToArray();
-            }
-        }
-
-        public ILocalNode LocalNode { get; set; }
-
-        public PeerTracker(ClientSettings clientSettings, IActiveNodeSet activeNodeSet)
+        public PeerTracker(ILocalIpAddressDiscoverer localIpAddressDiscoverer, ClientSettings clientSettings,RemoteNode.Factory remoteNodeFactory, ILoggerFactory loggerFactory)
         {
             _clientSettings = clientSettings;
-
-            _connectedPeers = new ConcurrentDictionary<string, IRemoteNode>();
-            _notConnectedPeers = new HashSet<IPEndPoint>();
-
-            _activeNodeSet = activeNodeSet;
+            _localIpEndpoint = new IPEndPoint(IPAddress.Parse(localIpAddressDiscoverer.GetLocalIpAddress()), _clientSettings.BlockChainNetSettings.UdpPort);
+            _trackedPeers = new ConcurrentDictionary<string, IRemoteNode>();
+            _remoteNodeFactory = remoteNodeFactory;
+            _logger = loggerFactory.CreateLogger<PeerTracker>();
         }
 
-        public bool TryAddNewConnectedPeer(IRemoteNode peer)
+        public bool NeedsMoreTrackedPeers => _trackedPeers.Count < MAX_NOT_CONNECTED_PEER_COUNT;
+
+        public IEnumerable<KeyValuePair<string, IRemoteNode>> GetTrackedPeers()
         {
-            if (Equals(peer.ListenerEndpoint.Address, LocalNode.LocalAddress.Address)
-                && peer.ListenerEndpoint.Port == _clientSettings.ListenPort)
+            foreach (var trackedPeer in _trackedPeers)
             {
-                return false;
-            }
-
-            _activeNodeSet.Add(peer.DNID);
-
-
-            lock (_notConnectedPeers)
-            {
-                var unConnectedEntry = _notConnectedPeers.FirstOrDefault(x => Equals(x.Address, peer.ListenerEndpoint.Address) && (x.Port == peer.ListenerEndpoint.Port));
-                if (unConnectedEntry != null)
-                {
-                    _notConnectedPeers.Remove(unConnectedEntry);
-                }
-            }
-
-            lock (_connectedPeers)
-            {
-                if (!_connectedPeers.ContainsKey($"{peer.ListenerEndpoint.Address}:{peer.ListenerEndpoint.Port}"))
-                {
-                    _connectedPeers[$"{peer.ListenerEndpoint.Address}:{peer.ListenerEndpoint.Port}"] = peer;
-                    return true;
-                }
-                return false;
+                yield return trackedPeer;
             }
         }
 
-        public bool TryAddNotConnectedIpEndPoint(IPEndPoint listenerEndPoint)
+        public bool TryAddPeer(IPEndPoint endPoint)
         {
-            if (Equals(listenerEndPoint.Address, LocalNode.LocalAddress.Address)
-                && listenerEndPoint.Port == _clientSettings.ListenPort)
+            if (Equals(endPoint.Address, _localIpEndpoint.Address)
+                && endPoint.Port == _localIpEndpoint.Port)
             {
                 return false;
             }
 
-            lock (_connectedPeers)
+            if (_trackedPeers.TryAdd($"{endPoint.Address}:{endPoint.Port}", _remoteNodeFactory.Invoke(endPoint)))
             {
-                if (_connectedPeers.Any(x => Equals(x.Value.ListenerEndpoint.Address, listenerEndPoint.Address) && x.Value.ListenerEndpoint.Port == listenerEndPoint.Port))
-                {
-                    return false;
-                }
-            }
-
-            lock (_notConnectedPeers)
-            {
-                if (!_notConnectedPeers.Any(x => Equals(x.Address, listenerEndPoint.Address) && x.Port == listenerEndPoint.Port))
-                {
-                    _notConnectedPeers.Add(listenerEndPoint);
-                    return true;
-                }
+                _logger.LogDebug("Added new peer {PEER}", endPoint.Address.MapToIPv4().ToString());
+                return true;
             }
 
             return false;
         }
 
-        public IRemoteNode RemovePeer(IRemoteNode peer)
+        public bool TryRemovePeer(IPEndPoint endPoint, out IRemoteNode outPeer)
         {
-            lock (peer)
+            if (_trackedPeers.TryRemove($"{endPoint.Address}:{endPoint.Port}", out outPeer))
             {
-                IRemoteNode outPeer;
-                if (_connectedPeers.TryRemove($"{peer.ListenerEndpoint.Address}:{peer.ListenerEndpoint.Port}", out outPeer))
-                {
-                    return outPeer;
-                }
-
-                return null;
+                return true;
             }
+
+            return false;
         }
     }
 }

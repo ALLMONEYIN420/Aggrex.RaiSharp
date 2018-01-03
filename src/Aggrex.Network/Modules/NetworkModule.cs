@@ -1,6 +1,7 @@
 ﻿using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
 using Aggrex.Network.ObjectReader;
+using Aggrex.Network.Packets;
 using Autofac;
 
 namespace Aggrex.Network.Modules
@@ -35,8 +36,8 @@ namespace Aggrex.Network.Modules
                 .As<ILocalIpAddressDiscoverer>()
                 .SingleInstance();
 
-            builder.RegisterType<DeterministicNetworkIdGenerator>()
-                .As<IDeterministicNetworkIdGenerator>()
+            builder.RegisterType<PacketBroadcaster>()
+                .As<IPacketBroadcaster>()
                 .SingleInstance();
         }
     }

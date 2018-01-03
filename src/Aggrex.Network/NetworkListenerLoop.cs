@@ -15,13 +15,13 @@ namespace Aggrex.Network
     {
         private readonly TcpListener _tcpListener;
         private readonly UdpClient _udpListener;
-        private readonly int _port;
+        private int _udpPort;
 
         public bool IsBroadCasting { get; set; }
         public NetworkListenerLoop(ClientSettings clientSettings)
         {
-            _port = clientSettings.ListenPort;
-            _tcpListener = new TcpListener(IPAddress.Any, _port);
+            _udpPort = clientSettings.BlockChainNetSettings.UdpPort;
+            //_tcpListener = new TcpListener(IPAddress.Any, clientSettings.BlockChainNetSettings.TcpPort);
             _udpListener = new UdpClient();
         }
 
@@ -31,18 +31,18 @@ namespace Aggrex.Network
 
         public void ExecuteTcpListenerLoop()
         {
-            _tcpListener.Start();
+            //_tcpListener.Start();
 
-            while (true)
-            {
-                TcpClient client = _tcpListener.AcceptTcpClient();
-                TcpConnectionEstablished?.Invoke(this, client);
-            }
+            //while (true)
+            //{
+            //    TcpClient client = _tcpListener.AcceptTcpClient();
+            //    TcpConnectionEstablished?.Invoke(this, client);
+            //}
         }
 
         public void ExecuteUdpListenerLoop()
         {
-            var endPoint = new IPEndPoint(IPAddress.Any, _port);
+            var endPoint = new IPEndPoint(IPAddress.Any, _udpPort);
             _udpListener.Client.Bind(endPoint);
             IPEndPoint senderDetails = null;
             while (true)

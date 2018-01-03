@@ -21,10 +21,6 @@ namespace Aggrex.ConsensusProtocol.Ioc.Modules
                 .As<IMessageDispatcher>()
                 .SingleInstance();
 
-            builder.RegisterType<ActiveNodeSet>()
-                .As<IActiveNodeSet>()
-                .SingleInstance();
-
             builder.RegisterType<KeepAliveMessageProcessor>()
                 .SingleInstance().Keyed<IMessageProcessor>(MessageType.Keepalive);
 

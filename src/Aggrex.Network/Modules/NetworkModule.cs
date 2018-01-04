@@ -36,8 +36,8 @@ namespace Aggrex.Network.Modules
                 .As<ILocalIpAddressDiscoverer>()
                 .SingleInstance();
 
-            builder.RegisterType<PacketBroadcaster>()
-                .As<IPacketBroadcaster>()
+            builder.RegisterType<PacketSender>()
+                .As<IPacketSender>()
                 .SingleInstance();
         }
     }

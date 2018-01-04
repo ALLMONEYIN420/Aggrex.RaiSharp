@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -11,6 +12,7 @@ using Aggrex.Framework;
 using Aggrex.Network;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Messages.KeepAlive;
+using Aggrex.Network.Packets;
 using Autofac;
 using Microsoft.Extensions.Logging;
 
@@ -28,6 +30,8 @@ namespace Aggrex.ConsensusProtocol
         private readonly ILogger<LocalNode> _logger;
         private readonly ClientSettings _clientSettings;
         private RemoteNode.Factory _remoteNodeFactory { get; set; }
+        private Timer _keepAliveTimer;
+        private IPacketSender _packetSender;
 
         public LocalNode(
             INetworkListenerLoop networkListenerLoop,
@@ -35,6 +39,7 @@ namespace Aggrex.ConsensusProtocol
             ILocalIpAddressDiscoverer localIpAddressDiscoverer,
             RemoteNode.Factory remoteNodeFactory,
             IPeerTracker peerTracker,
+            IPacketSender packetSender,
             ILoggerFactory loggerFactory,
             IMessageDispatcher messageDispatcher,
             ClientSettings clientSettings)
@@ -43,6 +48,8 @@ namespace Aggrex.ConsensusProtocol
 
             _uPnPPortForwarder = portForwarder;
             _peerTracker = peerTracker;
+
+            _packetSender = packetSender;
 
             _networkListenerLoop = networkListenerLoop;
             //_networkListenerLoop.TcpConnectionEstablished += HandleConnectionEstablished;
@@ -57,6 +64,20 @@ namespace Aggrex.ConsensusProtocol
             LocalAddress = new IPEndPoint(IPAddress.Parse(localIpAddressDiscoverer.GetLocalIpAddress()), port);
 
             _logger.LogInformation($"Started Listening on {LocalAddress.Address}:{LocalAddress.Port}");
+
+            _keepAliveTimer = new Timer(BroadcastKeepAliveMessages, null, 0, _clientSettings.KeepAliveTimeout * 1000);
+        }
+
+        private async void BroadcastKeepAliveMessages(object state)
+        {
+            foreach (var peer in _peerTracker.GetAllTrackedPeers())
+            {
+                var randomSetOfPeers = _peerTracker.GetRandomSetOfTrackedPeers(8);
+                var keepAliveMessage = new KeepAliveMessage();
+                keepAliveMessage.Peers = randomSetOfPeers.Select(x => x.IpEndPoint).ToArray();
+
+                await _packetSender.SendPacket(keepAliveMessage, peer.IpEndPoint);
+            }
         }
 
         private void HandleDatagramReceived(object sender, DataGramReceivedArgs args)
@@ -66,7 +87,8 @@ namespace Aggrex.ConsensusProtocol
             {
                 if (messageHeader.ReadFromStream(reader))
                 {
-                    _messageDispatcher.DispatchDatagramMessage(messageHeader, reader , args.Sender);
+                    _logger.LogDebug("Recieved {PACKET} from {SENDER}", messageHeader.Type.ToString(), args.Sender.Address.ToString());
+                    _messageDispatcher.DispatchDatagramMessage(messageHeader, reader, args.Sender);
                 }
             }
         }

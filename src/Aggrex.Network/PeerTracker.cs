@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,11 @@ namespace Aggrex.Network
         private ILogger<PeerTracker> _logger;
         private ClientSettings _clientSettings;
         private IPEndPoint _localIpEndpoint;
+        private Random _random;
 
         public PeerTracker(ILocalIpAddressDiscoverer localIpAddressDiscoverer, ClientSettings clientSettings,RemoteNode.Factory remoteNodeFactory, ILoggerFactory loggerFactory)
         {
+            _random = new Random();
             _clientSettings = clientSettings;
             _localIpEndpoint = new IPEndPoint(IPAddress.Parse(localIpAddressDiscoverer.GetLocalIpAddress()), _clientSettings.BlockChainNetSettings.UdpPort);
             _trackedPeers = new ConcurrentDictionary<string, IRemoteNode>();
@@ -37,11 +40,23 @@ namespace Aggrex.Network
 
         public bool NeedsMoreTrackedPeers => _trackedPeers.Count < MAX_NOT_CONNECTED_PEER_COUNT;
 
-        public IEnumerable<KeyValuePair<string, IRemoteNode>> GetTrackedPeers()
+        public IEnumerable<IRemoteNode> GetRandomSetOfTrackedPeers(int upperLimit)
+        {
+            List<IRemoteNode> randomList = new List<IRemoteNode>();
+
+            for (int i = 0; i < upperLimit; i++)
+            {
+                randomList.Add(_trackedPeers.ElementAt(_random.Next(0, _trackedPeers.Count)).Value);
+            }
+
+            return randomList.Distinct();
+        }
+
+        public IEnumerable<IRemoteNode> GetAllTrackedPeers()
         {
             foreach (var trackedPeer in _trackedPeers)
             {
-                yield return trackedPeer;
+                yield return trackedPeer.Value;
             }
         }
 

@@ -23,13 +23,13 @@ namespace Aggrex.Network
     public class RemoteNode : IRemoteNode
     {
         public delegate RemoteNode Factory(IPEndPoint ipEndPoint);
-        private IPacketBroadcaster _packetBroadcaster;
+        private IPacketSender _packetSender;
         public IPEndPoint IpEndPoint { get; private set; }
 
-        public RemoteNode(IPEndPoint ipEndPoint, IPacketBroadcaster packetBroadcaster)
+        public RemoteNode(IPEndPoint ipEndPoint, IPacketSender packetSender)
         {
             IpEndPoint = ipEndPoint;
-            _packetBroadcaster = packetBroadcaster;
+            _packetSender = packetSender;
         }
     }
 }

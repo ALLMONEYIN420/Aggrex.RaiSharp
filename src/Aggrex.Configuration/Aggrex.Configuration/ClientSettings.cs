@@ -6,7 +6,7 @@ namespace Aggrex.Configuration
         public byte VersionMin { get; set; }
         public byte VersionUsing { get; set; }
         public short Extensions { get; set; }
-        public string NodeType { get; set; }
+        public int KeepAliveTimeout { get; set; }
         public BlockChainNetSettings BlockChainNetSettings { get; set; }
     }
 }

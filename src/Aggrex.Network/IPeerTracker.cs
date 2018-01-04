@@ -13,6 +13,7 @@ namespace Aggrex.Network
         bool TryAddPeer(IPEndPoint peer);
         bool TryRemovePeer(IPEndPoint peer, out IRemoteNode remoteNode);
         bool NeedsMoreTrackedPeers { get; }
-        IEnumerable<KeyValuePair<string, IRemoteNode>> GetTrackedPeers();
+        IEnumerable<IRemoteNode> GetAllTrackedPeers();
+        IEnumerable<IRemoteNode> GetRandomSetOfTrackedPeers(int upperLimit);
     }
 }

@@ -6,17 +6,21 @@ using Blake2Sharp;
 
 namespace Aggrex.ConsensusProtocol.Security
 {
-    public class ChangeHashTables : IHashTable
+    public class OpenHashables : IHashable
     {
-        public ChangeHashTables(UInt256 previous, UInt256 representative)
+        public OpenHashables(UInt256 source, UInt256 account, UInt256 representative)
         {
-            Previous = previous;
+            Source = source;
+            Account = account;
             Representative = representative;
         }
 
-        private UInt256 Previous { get; set; }
+        private UInt256 Source { get; set; }
+        private UInt256 Account { get; set; }
         private UInt256 Representative { get; set; }
+
         private Dictionary<string, string> Data { get; set; }
+
         public void Hash(Blake2BConfig config, byte[] message)
         {
             var hasher = Blake2B.Create(new Blake2BConfig()
@@ -25,8 +29,9 @@ namespace Aggrex.ConsensusProtocol.Security
             });
 
             hasher.Init();
-            hasher.Update(Previous.ToByteArray());
+            hasher.Update(Source.ToByteArray());
             hasher.Update(Representative.ToByteArray());
+            hasher.Update(Account.ToByteArray());
         }
     }
 }

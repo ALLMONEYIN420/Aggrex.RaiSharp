@@ -2,7 +2,7 @@
 
 namespace Aggrex.Framework.Security
 {
-    public interface IHashTable
+    public interface IHashable
     {
         void Hash(Blake2BConfig config, byte[] message);
     }

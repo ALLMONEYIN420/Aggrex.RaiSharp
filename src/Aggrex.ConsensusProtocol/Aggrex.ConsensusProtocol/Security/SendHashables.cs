@@ -12,20 +12,21 @@ namespace Aggrex.ConsensusProtocol.Security
     {
         private static BigInteger MaxSendAmount = new BigInteger(new byte[]{0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00 });
 
-        public SendHashables(UInt256 destination, UInt256 previous, BigInteger amount)
+        public SendHashables(UInt256 destination, UInt256 previous, BigInteger balance)
         {
-            Destination = destination;
-            Previous = previous;
-
-            if (amount > MaxSendAmount)
+            if (balance > MaxSendAmount)
             {
                 throw new InvalidDataException("amount too big.");
             }
+
+            Destination = destination;
+            Previous = previous;
+            Balance = balance;
         }
 
         private UInt256 Destination { get; set; }
         private UInt256 Previous { get; set; }
-        private UInt256 Representative { get; set; }
+        private BigInteger Balance { get; set; }
 
         private Dictionary<string, string> Data { get; set; }
 
@@ -37,9 +38,9 @@ namespace Aggrex.ConsensusProtocol.Security
             });
 
             hasher.Init();
-            hasher.Update(Destination.ToByteArray());
-            hasher.Update(Representative.ToByteArray());
             hasher.Update(Previous.ToByteArray());
+            hasher.Update(Destination.ToByteArray());
+            hasher.Update(Balance.ToByteArray());
         }
     }
 }

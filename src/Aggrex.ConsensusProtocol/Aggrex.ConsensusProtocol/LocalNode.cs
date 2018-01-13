@@ -13,6 +13,7 @@ using Aggrex.Network;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Messages.KeepAlive;
 using Aggrex.Network.Packets;
+using Aggrex.Network.Requests;
 using Autofac;
 using Microsoft.Extensions.Logging;
 
@@ -32,6 +33,7 @@ namespace Aggrex.ConsensusProtocol
         private RemoteNode.Factory _remoteNodeFactory { get; set; }
         private Timer _keepAliveTimer;
         private IPacketSender _packetSender;
+        private MessageHeader _messageHeader;
 
         public LocalNode(
             INetworkListenerLoop networkListenerLoop,
@@ -66,6 +68,14 @@ namespace Aggrex.ConsensusProtocol
             _logger.LogInformation($"Started Listening on {LocalAddress.Address}:{LocalAddress.Port}");
 
             _keepAliveTimer = new Timer(BroadcastKeepAliveMessages, null, 0, _clientSettings.KeepAliveTimeout * 1000);
+
+
+            _messageHeader = new MessageHeader();
+            _messageHeader.Extensions = new byte[2];
+            _messageHeader.VersionMax = 5;
+            _messageHeader.VersionMin = 1;
+            _messageHeader.VersionUsing = 5;
+            _messageHeader.Type = MessageType.Keepalive;
         }
 
         private async void BroadcastKeepAliveMessages(object state)
@@ -73,7 +83,7 @@ namespace Aggrex.ConsensusProtocol
             foreach (var peer in _peerTracker.GetAllTrackedPeers())
             {
                 var randomSetOfPeers = _peerTracker.GetRandomSetOfTrackedPeers(8);
-                var keepAliveMessage = new KeepAliveMessage();
+                var keepAliveMessage = new KeepAliveMessage(_messageHeader);
                 keepAliveMessage.Peers = randomSetOfPeers.Select(x => x.IpEndPoint).ToArray();
 
                 await _packetSender.SendPacket(keepAliveMessage, peer.IpEndPoint);
@@ -103,15 +113,6 @@ namespace Aggrex.ConsensusProtocol
                 Task.Run(() => _networkListenerLoop.ExecuteTcpListenerLoop());
                 Task.Run(() => _networkListenerLoop.ExecuteUdpListenerLoop());
             });
-
-            //Task.Run(() =>
-            //{
-            //    foreach (var peer in _clientSettings.BlockChainNetSettings.SeedPeers)
-            //    {
-            //        IPAddress[] addresslist = Dns.GetHostAddresses(peer);
-            //        ConnectToPeer(new IPEndPoint(addresslist[0], _clientSettings.BlockChainNetSettings.Port));
-            //    }
-            //});
         }
 
         //private void ConnectToPeer(IPEndPoint endpoint)

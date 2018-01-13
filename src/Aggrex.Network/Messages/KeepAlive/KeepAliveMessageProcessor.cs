@@ -15,7 +15,8 @@ namespace Aggrex.Network.Messages.KeepAlive
 
         public void ProcessUdpMessage(MessageHeader messageHeader, BinaryReader reader, IPEndPoint sender)
         {
-            KeepAliveMessage msg = new KeepAliveMessage();
+            KeepAliveMessage msg = new KeepAliveMessage(messageHeader);
+
             if (msg.ReadFromStream(reader))
             {
                 _peerTracker.TryAddPeer(sender);

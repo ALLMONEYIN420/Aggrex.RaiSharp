@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
+  </ItemGroup>
+
 </Project>

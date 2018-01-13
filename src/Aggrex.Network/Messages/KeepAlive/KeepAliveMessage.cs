@@ -7,6 +7,10 @@ namespace Aggrex.Network.Messages.KeepAlive
 {
     public class KeepAliveMessage : BaseMessage
     {
+        public KeepAliveMessage(MessageHeader header) : base(header)
+        {
+        }
+
         public IPEndPoint[] Peers { get; set; } = new IPEndPoint[8];
 
         protected override void WriteProperties(BinaryWriter writer)
@@ -49,5 +53,7 @@ namespace Aggrex.Network.Messages.KeepAlive
                 return false;
             }
         }
+
+     
     }
 }

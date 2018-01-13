@@ -25,6 +25,9 @@ namespace Aggrex.ConsensusProtocol.Messages
                 case MessageType.Keepalive:
                     _messageProcessors[MessageType.Keepalive].ProcessUdpMessage(messageHeader, reader, sender);
                     break;
+                case MessageType.Publish:
+                    _messageProcessors[MessageType.Publish].ProcessUdpMessage(messageHeader, reader, sender);
+                    break;
             }
         }
     }

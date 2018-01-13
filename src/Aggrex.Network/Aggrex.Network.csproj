@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
     <ProjectReference Include="..\Aggrex.Common\Aggrex.Common.csproj" />
     <ProjectReference Include="..\Aggrex.Configuration\Aggrex.Configuration\Aggrex.Configuration.csproj" />
     <ProjectReference Include="..\Aggrex.Framework\Aggrex.Framework.csproj" />

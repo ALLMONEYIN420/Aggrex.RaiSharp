@@ -36,6 +36,12 @@ namespace Aggrex.Network
             _trackedPeers = new ConcurrentDictionary<string, IRemoteNode>();
             _remoteNodeFactory = remoteNodeFactory;
             _logger = loggerFactory.CreateLogger<PeerTracker>();
+
+            foreach (var peer in _clientSettings.BlockChainNetSettings.SeedPeers)
+            {
+                IPAddress[] addresslist = Dns.GetHostAddresses(peer);
+                TryAddPeer(new IPEndPoint(addresslist[0], 7075));
+            }
         }
 
         public bool NeedsMoreTrackedPeers => _trackedPeers.Count < MAX_NOT_CONNECTED_PEER_COUNT;

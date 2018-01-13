@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Numerics;
 
 namespace Aggrex.Common.BitSharp
 {
     public class UInt256 : IComparable<UInt256>
     {
+
         public static UInt256 Zero { get; } = new UInt256(new byte[0]);
         public static UInt256 One { get; } = (UInt256)1;
 
@@ -246,6 +248,11 @@ namespace Aggrex.Common.BitSharp
         public static UInt256 ParseHex(string value)
         {
             return new UInt256(BigInteger.Parse("0" + value, NumberStyles.HexNumber).ToByteArray());
+        }
+
+        public static UInt256 operator &(UInt256 left, UInt256 right)
+        {
+            return new UInt256(left.ToBigInteger() & right.ToBigInteger());
         }
 
         public static UInt256 operator +(UInt256 left, UInt256 right)

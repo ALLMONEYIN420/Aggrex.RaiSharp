@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Aggrex.Configuration;
 using Autofac;
@@ -18,11 +19,11 @@ namespace Aggrex.Network
         private int _udpPort;
 
         public bool IsBroadCasting { get; set; }
-        public NetworkListenerLoop(ClientSettings clientSettings)
+        public NetworkListenerLoop(ClientSettings clientSettings, IUPnPPortForwarder portFrForwarder)
         {
             _udpPort = clientSettings.BlockChainNetSettings.UdpPort;
             //_tcpListener = new TcpListener(IPAddress.Any, clientSettings.BlockChainNetSettings.TcpPort);
-            _udpListener = new UdpClient();
+            _udpListener = new UdpClient(new IPEndPoint(IPAddress.Parse("192.168.1.126"), 7075));
         }
 
         public event EventHandler<TcpClient> TcpConnectionEstablished;
@@ -42,18 +43,21 @@ namespace Aggrex.Network
 
         public void ExecuteUdpListenerLoop()
         {
-            var endPoint = new IPEndPoint(IPAddress.Any, _udpPort);
-            _udpListener.Client.Bind(endPoint);
-            IPEndPoint senderDetails = null;
             while (true)
             {
-                var data = _udpListener.Receive(ref senderDetails);
-                _udpListener.Receive(ref endPoint);
-                DatagramReceived?.Invoke(this, new DataGramReceivedArgs
+                try
                 {
-                    Data = data,
-                    Sender = senderDetails,
-                });
+                    var remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                    var data = _udpListener.Receive(ref remoteEndPoint);
+                    DatagramReceived?.Invoke(this, new DataGramReceivedArgs
+                    {
+                        Data = data,
+                        Sender = remoteEndPoint,
+                    });
+                }
+                catch (Exception e)
+                {
+                }
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Numerics;
 using Aggrex.Common.BitSharp;
-using Aggrex.ConsensusProtocol.Security;
 using Aggrex.Network.Security;
 
 namespace Aggrex.Network.Messages.Publish.Blocks

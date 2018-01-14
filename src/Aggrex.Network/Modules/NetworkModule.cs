@@ -1,6 +1,4 @@
-﻿using Aggrex.ConsensusProtocol;
-using Aggrex.ConsensusProtocol.Messages;
-using Aggrex.Network.HandShakes;
+﻿using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Messages.KeepAlive;
 using Aggrex.Network.Messages.Publish;

@@ -1,13 +1,9 @@
 ﻿using System.IO;
 using System.Net;
-using Aggrex.Network;
-using Aggrex.Network.Messages;
-using Aggrex.Network.ObjectReader;
 using Aggrex.Network.Requests;
-using Autofac;
 using Autofac.Features.Indexed;
 
-namespace Aggrex.ConsensusProtocol.Messages
+namespace Aggrex.Network.Messages
 {
     public class MessageDispatcher : IMessageDispatcher
     {

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 using Aggrex.Common.BitSharp;
 using Aggrex.Framework.Security;
 using Blake2Sharp;
 
-namespace Aggrex.ConsensusProtocol.Security
+namespace Aggrex.Network.Security
 {
     public class ChangeHashables : IHashable
     {

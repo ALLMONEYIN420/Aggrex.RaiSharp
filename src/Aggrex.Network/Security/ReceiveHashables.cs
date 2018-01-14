@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
+﻿using System.Collections.Generic;
 using Aggrex.Common.BitSharp;
 using Aggrex.Framework.Security;
 using Blake2Sharp;
 
-namespace Aggrex.ConsensusProtocol.Security
+namespace Aggrex.Network.Security
 {
     public class ReceiveHashables : IHashable
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -7,7 +6,7 @@ using System.Text;
 using Aggrex.Common.BitSharp;
 using Blake2Sharp;
 
-namespace Aggrex.ConsensusProtocol.Accounts
+namespace Aggrex.Network.Accounts
 {
     public class AccountConverter : IAccountConverter
     {

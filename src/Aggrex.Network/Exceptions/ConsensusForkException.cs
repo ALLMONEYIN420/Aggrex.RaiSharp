@@ -1,6 +1,4 @@
-﻿using Aggrex.Network.Exceptions;
-
-namespace Aggrex.Network
+﻿namespace Aggrex.Network.Exceptions
 {
     public class ConsensusForkException : ConsensusException
     {

@@ -1,15 +1,14 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Aggrex.Common.BitSharp;
 using Aggrex.Configuration;
-using Aggrex.ConsensusProtocol.Accounts;
 using Aggrex.Database;
 using Aggrex.Database.LiteDB;
 using Aggrex.Database.Models;
+using Aggrex.Network.Accounts;
 using LiteDB;
 using Xunit;
 
-namespace Aggrex.LiteDb.Ttests
+namespace Aggrex.Network.Tests
 {
     public class LiteDbTests
     {

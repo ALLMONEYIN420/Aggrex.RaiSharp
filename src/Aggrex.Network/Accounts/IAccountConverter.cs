@@ -1,6 +1,6 @@
 ﻿using Aggrex.Common.BitSharp;
 
-namespace Aggrex.ConsensusProtocol.Accounts
+namespace Aggrex.Network.Accounts
 {
     public interface IAccountConverter
     {

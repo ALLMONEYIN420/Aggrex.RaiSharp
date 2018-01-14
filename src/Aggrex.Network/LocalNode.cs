@@ -1,23 +1,16 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Aggrex.Common;
 using Aggrex.Configuration;
-using Aggrex.ConsensusProtocol.Messages;
-using Aggrex.Framework;
-using Aggrex.Network;
 using Aggrex.Network.Messages;
 using Aggrex.Network.Messages.KeepAlive;
 using Aggrex.Network.Packets;
 using Aggrex.Network.Requests;
-using Autofac;
 using Microsoft.Extensions.Logging;
 
-namespace Aggrex.ConsensusProtocol
+namespace Aggrex.Network
 {
     /// <summary>
     /// Represents a client node in the system. 

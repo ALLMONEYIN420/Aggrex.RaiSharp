@@ -1,7 +1,9 @@
 ﻿using System.Transactions;
+using Aggrex.Common.BitSharp;
 using Aggrex.Configuration;
 using Aggrex.Database.Models;
 using Autofac;
+using LiteDB;
 using Microsoft.Extensions.Configuration;
 
 namespace Aggrex.Database.LiteDB.Modules
@@ -10,6 +12,12 @@ namespace Aggrex.Database.LiteDB.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            BsonMapper.Global.RegisterType<UInt256>
+            (
+                serialize: (uri) => uri.ToByteArray(),
+                deserialize: (bson) => new UInt256(bson.AsBinary)
+            );
+
             ConfigurationSettingsProvider provider = new ConfigurationSettingsProvider();
 
             DatabaseSettings settings = new DatabaseSettings();
@@ -19,14 +27,6 @@ namespace Aggrex.Database.LiteDB.Modules
                 .As<DatabaseSettings>()
                 .SingleInstance();
 
-            RegisterRepositoriesForModels(builder);
-        }
-
-        private void RegisterRepositoriesForModels(ContainerBuilder builder)
-        {
-            builder.RegisterType<LiteDBRepository<TransferTransactionModel>>()
-                .As<IRepository<TransferTransactionModel>>()
-                .SingleInstance();
         }
     }
 }

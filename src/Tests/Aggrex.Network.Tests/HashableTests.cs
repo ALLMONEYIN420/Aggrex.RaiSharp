@@ -6,6 +6,7 @@ using System.Text;
 using Aggrex.Common.BitSharp;
 using Aggrex.ConsensusProtocol.Accounts;
 using Aggrex.ConsensusProtocol.Security;
+using Aggrex.Network.Security;
 using Blake2Sharp;
 using Xunit;
 

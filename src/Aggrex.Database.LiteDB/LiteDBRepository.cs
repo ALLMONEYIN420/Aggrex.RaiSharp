@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aggrex.Common.BitSharp;
 using Aggrex.Configuration;
 using LiteDB;
 
 namespace Aggrex.Database.LiteDB
 {
-    public class LiteDBRepository<T> : IRepository<T> where T : IDataModel
+    public class LiteDBRepository<T> : IRepository<T>
     {
         private readonly DatabaseSettings _databaseSettings;
         private readonly LiteRepository _liteRepository;
@@ -17,7 +18,7 @@ namespace Aggrex.Database.LiteDB
 
         public void Insert(T item)
         {
-            _liteRepository.Insert(item);
+            var s = _liteRepository.Insert(item);
         }
 
         public void Update(T item)
@@ -25,9 +26,9 @@ namespace Aggrex.Database.LiteDB
             _liteRepository.Update(item);
         }
 
-        public void Delete(int id)
+        public void Delete(UInt256 id)
         {
-            _liteRepository.Delete<T>((item) => item.Id == id , typeof(T).Name);
+            _liteRepository.Database.GetCollection<T>().Delete(id.ToByteArray());
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
@@ -35,9 +36,9 @@ namespace Aggrex.Database.LiteDB
             return _liteRepository.Query<T>().Where(x => predicate(x)).ToEnumerable();
         }
 
-        public T FindOne(Func<T, bool> predicate)
+        public T FindOneById(UInt256 id)
         {
-            return _liteRepository.FirstOrDefault<T>(x => predicate(x));
+            return _liteRepository.Database.GetCollection<T>().FindById(id.ToByteArray());
         }
     }
 }

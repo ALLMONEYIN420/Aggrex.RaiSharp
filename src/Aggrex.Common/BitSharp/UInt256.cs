@@ -16,6 +16,10 @@ namespace Aggrex.Common.BitSharp
         private readonly ulong[] parts;
         private readonly int hashCode;
 
+        public UInt256()
+        {
+        }
+
         public UInt256(byte[] value)
         {
             // length must be <= 32, or 33 with the last byte set to 0 to indicate the number is positive

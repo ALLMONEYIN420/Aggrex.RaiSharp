@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27128.1
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5F9D56CE-CDBF-4471-9359-BC0B0BA5EA13}"
 EndProject
@@ -23,15 +23,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Database.LiteDB", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Framework", "src\Aggrex.Framework\Aggrex.Framework.csproj", "{ADB98D2E-F041-44E1-AAAB-6F4F63EBE711}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.Logging", "src\Aggrex.Logging\Aggrex.Logging.csproj", "{68B385CD-E109-4520-8C6C-CA320B7C3801}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Logging", "src\Aggrex.Logging\Aggrex.Logging.csproj", "{68B385CD-E109-4520-8C6C-CA320B7C3801}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.RaiNode", "src\Aggrex.Clients\RaiNode\Aggrex.RaiNode\Aggrex.RaiNode.csproj", "{7BFE84B2-3D93-4AC4-9107-1675F502089D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.RaiNode", "src\Aggrex.Clients\RaiNode\Aggrex.RaiNode\Aggrex.RaiNode.csproj", "{7BFE84B2-3D93-4AC4-9107-1675F502089D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aggrex.Network.Tests", "src\Tests\Aggrex.Network.Tests\Aggrex.Network.Tests.csproj", "{CD0549B5-E5A5-4C92-BB1A-B898EEC1E9D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Network.Tests", "src\Tests\Aggrex.Network.Tests\Aggrex.Network.Tests.csproj", "{CD0549B5-E5A5-4C92-BB1A-B898EEC1E9D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{27001E34-E905-4702-95DA-47840176FF43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blake2Sharp", "..\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj", "{E21AB364-9130-4F14-ABE1-18FA0C089130}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.NaCl", "..\Chaos.NaCl\Chaos.NaCl\Chaos.NaCl.csproj", "{AE28FD14-7985-4707-A963-C94B8597AE50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{E21AB364-9130-4F14-ABE1-18FA0C089130}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E21AB364-9130-4F14-ABE1-18FA0C089130}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E21AB364-9130-4F14-ABE1-18FA0C089130}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE28FD14-7985-4707-A963-C94B8597AE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE28FD14-7985-4707-A963-C94B8597AE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE28FD14-7985-4707-A963-C94B8597AE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE28FD14-7985-4707-A963-C94B8597AE50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{7BFE84B2-3D93-4AC4-9107-1675F502089D} = {9D9F2BF1-6C66-4DCB-8191-1D6335CBA0FB}
 		{CD0549B5-E5A5-4C92-BB1A-B898EEC1E9D9} = {5F9D56CE-CDBF-4471-9359-BC0B0BA5EA13}
 		{E21AB364-9130-4F14-ABE1-18FA0C089130} = {27001E34-E905-4702-95DA-47840176FF43}
+		{AE28FD14-7985-4707-A963-C94B8597AE50} = {27001E34-E905-4702-95DA-47840176FF43}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9F7888B0-B352-4602-9CF8-A862DDD02705}

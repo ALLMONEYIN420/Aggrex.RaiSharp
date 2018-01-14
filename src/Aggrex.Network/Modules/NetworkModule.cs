@@ -1,7 +1,12 @@
-﻿using Aggrex.Network.HandShakes;
+﻿using Aggrex.ConsensusProtocol;
+using Aggrex.ConsensusProtocol.Messages;
+using Aggrex.Network.HandShakes;
 using Aggrex.Network.Messages;
+using Aggrex.Network.Messages.KeepAlive;
+using Aggrex.Network.Messages.Publish;
 using Aggrex.Network.ObjectReader;
 using Aggrex.Network.Packets;
+using Aggrex.Network.Requests;
 using Autofac;
 
 namespace Aggrex.Network.Modules
@@ -39,6 +44,20 @@ namespace Aggrex.Network.Modules
             builder.RegisterType<PacketSender>()
                 .As<IPacketSender>()
                 .SingleInstance();
+
+            builder.RegisterType<LocalNode>()
+                .As<ILocalNode>()
+                .SingleInstance();
+
+            builder.RegisterType<MessageDispatcher>()
+                .As<IMessageDispatcher>()
+                .SingleInstance();
+
+            builder.RegisterType<KeepAliveMessageProcessor>()
+                .SingleInstance().Keyed<IMessageProcessor>(MessageType.Keepalive);
+
+            builder.RegisterType<PublishMessageProcessor>()
+                .SingleInstance().Keyed<IMessageProcessor>(MessageType.Publish);
         }
     }
 }

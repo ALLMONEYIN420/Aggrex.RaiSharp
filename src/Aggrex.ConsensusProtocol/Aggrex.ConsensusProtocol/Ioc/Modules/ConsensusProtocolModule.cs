@@ -14,19 +14,7 @@ namespace Aggrex.ConsensusProtocol.Ioc.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<LocalNode>()
-                .As<ILocalNode>()
-                .SingleInstance();
-
-            builder.RegisterType<MessageDispatcher>()
-                .As<IMessageDispatcher>()
-                .SingleInstance();
-
-            builder.RegisterType<KeepAliveMessageProcessor>()
-                .SingleInstance().Keyed<IMessageProcessor>(MessageType.Keepalive);
-
-            builder.RegisterType<PublishMessageProcessor>()
-                .SingleInstance().Keyed<IMessageProcessor>(MessageType.Publish);
+          
 
         }
     }

@@ -31,9 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggrex.Network.Tests", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{27001E34-E905-4702-95DA-47840176FF43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blake2Sharp", "..\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj", "{E21AB364-9130-4F14-ABE1-18FA0C089130}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blake2Sharp", "src\Libs\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj", "{E21AB364-9130-4F14-ABE1-18FA0C089130}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.NaCl", "..\Chaos.NaCl\Chaos.NaCl\Chaos.NaCl.csproj", "{AE28FD14-7985-4707-A963-C94B8597AE50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.NaCl", "src\Libs\Chaos.NaCl\Chaos.NaCl\Chaos.NaCl.csproj", "{AE28FD14-7985-4707-A963-C94B8597AE50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

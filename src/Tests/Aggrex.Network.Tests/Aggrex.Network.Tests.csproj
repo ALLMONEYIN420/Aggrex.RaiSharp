@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
+    <ProjectReference Include="..\..\Libs\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
     <ProjectReference Include="..\..\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol.csproj" />
     <ProjectReference Include="..\..\Aggrex.Database.LiteDB\Aggrex.Database.LiteDB.csproj" />
     <ProjectReference Include="..\..\Aggrex.Network\Aggrex.Network.csproj" />

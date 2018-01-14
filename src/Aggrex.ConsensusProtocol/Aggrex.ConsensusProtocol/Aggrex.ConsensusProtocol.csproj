@@ -15,6 +15,8 @@
     <ProjectReference Include="..\..\Aggrex.Database\Aggrex.Database.csproj" />
     <ProjectReference Include="..\..\Aggrex.Framework\Aggrex.Framework.csproj" />
     <ProjectReference Include="..\..\Aggrex.Network\Aggrex.Network.csproj" />
+    <ProjectReference Include="..\..\Libs\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
+    <ProjectReference Include="..\..\Libs\Chaos.NaCl\Chaos.NaCl\Chaos.NaCl.csproj" />
   </ItemGroup>
 
   <ItemGroup>

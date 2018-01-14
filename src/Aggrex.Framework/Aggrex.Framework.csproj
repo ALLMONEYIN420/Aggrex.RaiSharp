@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
+    <ProjectReference Include="..\Libs\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
   </ItemGroup>
 
 </Project>

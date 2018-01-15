@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="LiteDb\**" />
+    <EmbeddedResource Remove="LiteDb\**" />
+    <None Remove="LiteDb\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extras.Moq" Version="4.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
@@ -17,13 +23,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libs\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
-    <ProjectReference Include="..\..\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol\Aggrex.ConsensusProtocol.csproj" />
     <ProjectReference Include="..\..\Aggrex.Database.LiteDB\Aggrex.Database.LiteDB.csproj" />
     <ProjectReference Include="..\..\Aggrex.Network\Aggrex.Network.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="LiteDb\" />
   </ItemGroup>
 
 </Project>

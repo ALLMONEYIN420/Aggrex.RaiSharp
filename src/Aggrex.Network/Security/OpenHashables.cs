@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 using Aggrex.Common.BitSharp;
 using Aggrex.Framework.Security;
 using Blake2Sharp;
 
-namespace Aggrex.ConsensusProtocol.Security
+namespace Aggrex.Network.Security
 {
     public class OpenHashables : IHashable
     {
@@ -15,9 +14,9 @@ namespace Aggrex.ConsensusProtocol.Security
             Representative = representative;
         }
 
-        private UInt256 Source { get; set; }
-        private UInt256 Account { get; set; }
-        private UInt256 Representative { get; set; }
+        public UInt256 Source { get; set; }
+        public UInt256 Account { get; set; }
+        public UInt256 Representative { get; set; }
 
         private Dictionary<string, string> Data { get; set; }
 

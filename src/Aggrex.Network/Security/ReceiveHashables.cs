@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
+﻿using System.Collections.Generic;
 using Aggrex.Common.BitSharp;
 using Aggrex.Framework.Security;
 using Blake2Sharp;
 
-namespace Aggrex.ConsensusProtocol.Security
+namespace Aggrex.Network.Security
 {
     public class ReceiveHashables : IHashable
     {
@@ -16,11 +13,8 @@ namespace Aggrex.ConsensusProtocol.Security
             Source = source;
         }
 
-        private UInt256 Previous { get; set; }
-        private UInt256 Source { get; set; }
-
-        private Dictionary<string, string> Data { get; set; }
-
+        public UInt256 Previous { get; set; }
+        public UInt256 Source { get; set; }
         public void Hash(Blake2BConfig config, byte[] message)
         {
             var hasher = Blake2B.Create(new Blake2BConfig()

@@ -9,15 +9,8 @@ namespace Aggrex.Network.Security
 {
     public class SendHashables : IHashable
     {
-        private static BigInteger MaxSendAmount = new BigInteger(new byte[]{0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00 });
-
-        public SendHashables(UInt256 destination, UInt256 previous, BigInteger balance)
+        public SendHashables(UInt256 destination, UInt256 previous, UInt128 balance)
         {
-            if (balance > MaxSendAmount)
-            {
-                throw new InvalidDataException("amount too big.");
-            }
-
             Destination = destination;
             Previous = previous;
             Balance = balance;
@@ -25,7 +18,7 @@ namespace Aggrex.Network.Security
 
         public UInt256 Destination { get; set; }
         public UInt256 Previous { get; set; }
-        public BigInteger Balance { get; set; }
+        public UInt128 Balance { get; set; }
 
         public void Hash(Blake2BConfig config, byte[] message)
         {

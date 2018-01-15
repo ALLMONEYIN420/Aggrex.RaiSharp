@@ -56,6 +56,11 @@ namespace Aggrex.Common.BitSharp
             return Bits.ToString(value.ToByteArrayBE()).Replace("-", "").ToLower();
         }
 
+        public static string ToHexNumberString(this UInt128 value)
+        {
+            return Bits.ToString(value.ToByteArrayBE()).Replace("-", "").ToLower();
+        }
+
         public static string ToHexNumberString(this BigInteger value)
         {
             return ToHexNumberString(value.ToByteArray());

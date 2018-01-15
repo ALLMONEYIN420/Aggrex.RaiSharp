@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using Aggrex.ConsensusProtocol.Accounts;
+using Aggrex.Network.Accounts;
 using Blake2Sharp;
 using Xunit;
 

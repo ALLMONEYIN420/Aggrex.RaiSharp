@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 using Aggrex.Common.BitSharp;
 using Aggrex.Framework.Security;
 using Blake2Sharp;
 
-namespace Aggrex.ConsensusProtocol.Security
+namespace Aggrex.Network.Security
 {
     public class ChangeHashables : IHashable
     {
@@ -14,9 +13,9 @@ namespace Aggrex.ConsensusProtocol.Security
             Representative = representative;
         }
 
-        private UInt256 Previous { get; set; }
-        private UInt256 Representative { get; set; }
-        private Dictionary<string, string> Data { get; set; }
+        public UInt256 Previous { get; set; }
+        public UInt256 Representative { get; set; }
+        public Dictionary<string, string> Data { get; set; }
         public void Hash(Blake2BConfig config, byte[] message)
         {
             var hasher = Blake2B.Create(new Blake2BConfig()

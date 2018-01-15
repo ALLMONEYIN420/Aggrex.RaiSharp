@@ -1,4 +1,4 @@
-linguist-vendored src/Libs/*
+src/Libs/* linguist-vendored
 
 ###############################################################################
 # Set default behavior to automatically normalize line endings.

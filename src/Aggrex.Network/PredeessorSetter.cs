@@ -1,4 +1,5 @@
-﻿using Aggrex.Network.Messages.Publish;
+﻿using Aggrex.Common.ThrowHelpers;
+using Aggrex.Network.Messages.Publish;
 using Aggrex.Network.Messages.Publish.Blocks;
 
 namespace Aggrex.Network
@@ -45,6 +46,7 @@ namespace Aggrex.Network
         {
             var hash = block.Hash();
             var prevBlock = _ledger.GetBlock(block.Previous);
+            ThrowHelper.Sanity.ThrowIfNull(prevBlock);
         }
     }
 }

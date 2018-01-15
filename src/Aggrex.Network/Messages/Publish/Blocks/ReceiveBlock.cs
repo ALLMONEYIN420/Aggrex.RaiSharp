@@ -1,9 +1,17 @@
 ﻿using System.IO;
+using Aggrex.Common.BitSharp;
+using Aggrex.Network.Security;
 
 namespace Aggrex.Network.Messages.Publish.Blocks
 {
     public class ReceiveBlock : Block
     {
+        public override UInt256 Representative { get; } = UInt256.Zero;
+
+        public ReceiveHashables Hashables { get; set; }
+
+        public override UInt256 Previous => Hashables.Previous;
+
         protected override void WriteProperties(BinaryWriter writer)
         {
         }

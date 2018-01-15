@@ -7,7 +7,6 @@ namespace Aggrex.Common.BitSharp
 {
     public class UInt256 : IComparable<UInt256>
     {
-
         public static UInt256 Zero { get; } = new UInt256(new byte[0]);
         public static UInt256 One { get; } = (UInt256)1;
 

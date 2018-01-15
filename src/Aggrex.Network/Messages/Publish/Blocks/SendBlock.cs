@@ -8,6 +8,8 @@ namespace Aggrex.Network.Messages.Publish.Blocks
     public class SendBlock : Block
     {
         public SendHashables Hashables { get; set; }
+        public override UInt256 Representative { get; } = UInt256.Zero;
+        public override UInt256 Previous => Hashables.Previous;
 
         protected override void WriteProperties(BinaryWriter writer)
         {

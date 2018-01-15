@@ -14,9 +14,9 @@ namespace Aggrex.Network.Security
             Representative = representative;
         }
 
-        private UInt256 Source { get; set; }
-        private UInt256 Account { get; set; }
-        private UInt256 Representative { get; set; }
+        public UInt256 Source { get; set; }
+        public UInt256 Account { get; set; }
+        public UInt256 Representative { get; set; }
 
         private Dictionary<string, string> Data { get; set; }
 

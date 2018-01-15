@@ -5,6 +5,7 @@ using Aggrex.Database;
 using Aggrex.Database.LiteDB;
 using Aggrex.Database.Models;
 using Aggrex.Network.Accounts;
+using Aggrex.Network.Models;
 using LiteDB;
 using Xunit;
 

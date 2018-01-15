@@ -13,11 +13,12 @@ namespace Aggrex.Network.Messages.Publish
     {
         public static UInt32 BlockTypeMask = 0x0F00;
         public BigInteger Signature { get; set; }
+        public abstract UInt256 Representative { get;}
+        public abstract UInt256 Previous { get;}
         public UInt64 Work { get; set; }
         public UInt256 Hash()
         {
             return null;
-
         }
 
         public bool ValidateMessage()

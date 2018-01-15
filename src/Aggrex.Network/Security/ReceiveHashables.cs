@@ -13,11 +13,8 @@ namespace Aggrex.Network.Security
             Source = source;
         }
 
-        private UInt256 Previous { get; set; }
-        private UInt256 Source { get; set; }
-
-        private Dictionary<string, string> Data { get; set; }
-
+        public UInt256 Previous { get; set; }
+        public UInt256 Source { get; set; }
         public void Hash(Blake2BConfig config, byte[] message)
         {
             var hasher = Blake2B.Create(new Blake2BConfig()

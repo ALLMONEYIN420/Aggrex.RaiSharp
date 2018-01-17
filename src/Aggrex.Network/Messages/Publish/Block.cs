@@ -15,12 +15,9 @@ namespace Aggrex.Network.Messages.Publish
         public BigInteger Signature { get; set; }
         public abstract UInt256 Representative { get;}
         public abstract UInt256 Previous { get;}
+        public UInt256 Successor { get; set; }
         public UInt64 Work { get; set; }
-        public UInt256 Hash()
-        {
-            return null;
-        }
-
+        public abstract UInt256 Hash();
         public bool ValidateMessage()
         {
             return true;

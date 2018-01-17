@@ -1,7 +1,6 @@
 ﻿using System.Transactions;
 using Aggrex.Common.BitSharp;
 using Aggrex.Configuration;
-using Aggrex.Database.Models;
 using Autofac;
 using LiteDB;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +25,6 @@ namespace Aggrex.Database.LiteDB.Modules
             builder.RegisterInstance(settings)
                 .As<DatabaseSettings>()
                 .SingleInstance();
-
         }
     }
 }

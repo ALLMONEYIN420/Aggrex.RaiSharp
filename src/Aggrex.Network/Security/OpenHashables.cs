@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using Aggrex.Common.BitSharp;
-using Aggrex.Framework.Security;
 using Blake2Sharp;
 
 namespace Aggrex.Network.Security
 {
-    public class OpenHashables : IHashable
+    public class OpenHashables
     {
         public OpenHashables(UInt256 source, UInt256 account, UInt256 representative)
         {
@@ -20,7 +19,7 @@ namespace Aggrex.Network.Security
 
         private Dictionary<string, string> Data { get; set; }
 
-        public void Hash(Blake2BConfig config, byte[] message)
+        public UInt256 Hash()
         {
             var hasher = Blake2B.Create(new Blake2BConfig()
             {
@@ -31,6 +30,8 @@ namespace Aggrex.Network.Security
             hasher.Update(Source.ToByteArray());
             hasher.Update(Representative.ToByteArray());
             hasher.Update(Account.ToByteArray());
+
+            return new UInt256(hasher.Finish());
         }
     }
 }

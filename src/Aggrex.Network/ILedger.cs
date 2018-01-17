@@ -6,11 +6,23 @@ namespace Aggrex.Network
 {
     public interface ILedger
     {
-        void AddRepresentation(UInt256 repBlockHash, UInt128 amount);
-        Block GetBlock(UInt256 blockHash);
-        void PutBlock(UInt256 blockHash, SendBlock block, UInt256 successorHash = null);
-        void PutBlock(UInt256 blockHash, ReceiveBlock block, UInt256 successorHash = null);
-        void PutBlock(UInt256 blockHash, OpenBlock block, UInt256 successorHash = null);
-        void PutBlock(UInt256 blockHash, ChangeBlock block, UInt256 successorHash = null);
+        void AddRepresentation(UInt256 repBlockHash, BlockType type, UInt128 amount);
+        Block SearchForBlock(UInt256 blockHash);
+
+
+        SendBlock GetSendBlock(UInt256 blockHash);
+        OpenBlock GetOpenBlock(UInt256 blockHash);
+        ChangeBlock GetChangeBlock(UInt256 blockHash);
+        ReceiveBlock GetReceiveBlock(UInt256 blockHash);
+
+        void AddBlock(SendBlock block);
+        void AddBlock(ReceiveBlock block);
+        void AddBlock(OpenBlock block);
+        void AddBlock(ChangeBlock block);
+
+        void UpdateBlock(SendBlock block);
+        void UpdateBlock(ReceiveBlock block);
+        void UpdateBlock(OpenBlock block);
+        void UpdateBlock(ChangeBlock block);
     }
 }

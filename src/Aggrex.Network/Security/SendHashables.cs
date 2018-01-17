@@ -2,12 +2,11 @@
 using System.IO;
 using System.Numerics;
 using Aggrex.Common.BitSharp;
-using Aggrex.Framework.Security;
 using Blake2Sharp;
 
 namespace Aggrex.Network.Security
 {
-    public class SendHashables : IHashable
+    public class SendHashables
     {
         public SendHashables(UInt256 destination, UInt256 previous, UInt128 balance)
         {
@@ -19,8 +18,7 @@ namespace Aggrex.Network.Security
         public UInt256 Destination { get; set; }
         public UInt256 Previous { get; set; }
         public UInt128 Balance { get; set; }
-
-        public void Hash(Blake2BConfig config, byte[] message)
+        public UInt256 Hash()
         {
             var hasher = Blake2B.Create(new Blake2BConfig()
             {
@@ -31,6 +29,8 @@ namespace Aggrex.Network.Security
             hasher.Update(Previous.ToByteArray());
             hasher.Update(Destination.ToByteArray());
             hasher.Update(Balance.ToByteArray());
+
+            return new UInt256(hasher.Finish());
         }
     }
 }

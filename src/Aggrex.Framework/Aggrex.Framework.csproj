@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Aggrex.Common\Aggrex.Common.csproj" />
     <ProjectReference Include="..\Libs\Blake2b\BLAKE2\csharp\Blake2Sharp\Blake2Sharp.csproj" />
   </ItemGroup>
 

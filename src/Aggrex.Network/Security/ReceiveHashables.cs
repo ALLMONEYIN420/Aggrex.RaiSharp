@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using Aggrex.Common.BitSharp;
-using Aggrex.Framework.Security;
 using Blake2Sharp;
 
 namespace Aggrex.Network.Security
 {
-    public class ReceiveHashables : IHashable
+    public class ReceiveHashables
     {
         public ReceiveHashables(UInt256 previous, UInt256 source)
         {
@@ -14,8 +13,10 @@ namespace Aggrex.Network.Security
         }
 
         public UInt256 Previous { get; set; }
+
         public UInt256 Source { get; set; }
-        public void Hash(Blake2BConfig config, byte[] message)
+
+        public UInt256 Hash()
         {
             var hasher = Blake2B.Create(new Blake2BConfig()
             {
@@ -25,6 +26,8 @@ namespace Aggrex.Network.Security
             hasher.Init();
             hasher.Update(Previous.ToByteArray());
             hasher.Update(Source.ToByteArray());
+
+            return new UInt256(hasher.Finish());
         }
     }
 }

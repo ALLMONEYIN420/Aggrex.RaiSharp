@@ -9,6 +9,10 @@ namespace Aggrex.Network.Messages.Publish.Blocks
         public ChangeHashables Hashables { get; set; }
         public override UInt256 Representative => Hashables.Representative;
         public override UInt256 Previous => Hashables.Previous;
+        public override UInt256 Hash()
+        {
+            return Hashables.Hash();
+        }
 
         protected override void WriteProperties(BinaryWriter writer)
         {

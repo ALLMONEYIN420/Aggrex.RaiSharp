@@ -2,6 +2,7 @@
 using System.Numerics;
 using Aggrex.Common.BitSharp;
 using Aggrex.Network.Security;
+using Blake2Sharp;
 
 namespace Aggrex.Network.Messages.Publish.Blocks
 {
@@ -10,6 +11,11 @@ namespace Aggrex.Network.Messages.Publish.Blocks
         public SendHashables Hashables { get; set; }
         public override UInt256 Representative { get; } = UInt256.Zero;
         public override UInt256 Previous => Hashables.Previous;
+
+        public override UInt256 Hash()
+        {
+            return Hashables.Hash(); 
+        }
 
         protected override void WriteProperties(BinaryWriter writer)
         {
